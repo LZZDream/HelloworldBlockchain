@@ -140,6 +140,7 @@ public class StructureSizeTool {
         size += calculateLongTextSize(block.getNonce());
         return size;
     }
+    //TODO 计算DTO的大小
     public static long calculateTransactionTextSize(Transaction transaction) {
         long size = 0;
         List<TransactionInput> inputs = transaction.getInputs();

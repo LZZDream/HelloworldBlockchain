@@ -152,6 +152,12 @@ public class BlockchainCoreImpl extends BlockchainCore {
 
     public BuildTransactionResponse buildTransactionDTO(BuildTransactionRequest request) {
         List<Account> allAccountList = wallet.queryAllAccount();
+        if(allAccountList == null || allAccountList.isEmpty()){
+            BuildTransactionResponse response = new BuildTransactionResponse();
+            response.setBuildTransactionSuccess(false);
+            response.setMessage("钱包中的余额不足支付。");
+            return response;
+        }
         List<String> privateKeyList = new ArrayList<>();
         if(allAccountList != null){
             for(Account account:allAccountList){
@@ -159,14 +165,7 @@ public class BlockchainCoreImpl extends BlockchainCore {
             }
         }
         //存放找零
-        Account account = null;
-        List<Account> queryAllAccount = wallet.queryAllAccount();
-        if(queryAllAccount != null && queryAllAccount.size()>0){
-            account = queryAllAccount.get(0);
-        }else {
-            account = wallet.createAccount();
-            wallet.addAccount(account);
-        }
+        Account account = allAccountList.get(0);
         return buildTransactionDTO(privateKeyList,account.getAddress(),request.getRecipientList());
     }
 
@@ -200,10 +199,16 @@ public class BlockchainCoreImpl extends BlockchainCore {
         boolean haveEnoughMoneyToPay = false;
         //序号
         for(String privateKey : payerPrivateKeyList){
+            if(haveEnoughMoneyToPay){
+                break;
+            }
             //TODO 优化 可能不止100
             String address = AccountUtil.accountFromPrivateKey(privateKey).getAddress();
             List<TransactionOutput> utxoList = blockchainDataBase.queryUnspendTransactionOutputListByAddress(address,0,100);
             for(TransactionOutput transactionOutput:utxoList){
+                if(haveEnoughMoneyToPay){
+                    break;
+                }
                 inputValues += transactionOutput.getValue();
                 //交易输入
                 inputs.add(transactionOutput);
