@@ -63,6 +63,7 @@ public class SynchronizeRemoteNodeBlockServiceImpl implements SynchronizeRemoteN
         Block tailBlock = blockchainDataBase.queryTailBlock();
         long localBlockchainHeight = tailBlock==null? LongUtil.ZERO:tailBlock.getHeight();
 
+        //本地区块链与node区块链是否分叉？
         boolean fork = false;
         if(LongUtil.isEquals(localBlockchainHeight,LongUtil.ZERO)){
             fork = false;
@@ -193,7 +194,7 @@ public class SynchronizeRemoteNodeBlockServiceImpl implements SynchronizeRemoteN
     }
 
     private String buildNodeId(NodeDto node) {
-        return node.getIp()+":"+GlobalSetting.DEFAULT_PORT;
+        return node.getIp();
     }
 
     private BlockDTO getBlockDtoByBlockHeight(NodeDto node, long blockHeight) {
