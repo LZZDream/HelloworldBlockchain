@@ -88,8 +88,8 @@ public class SynchronizeRemoteNodeBlockServiceImpl implements SynchronizeRemoteN
             }
         }
 
-        //确定开始同步高度
         if(fork){
+            //分叉
             //从当前区块同步至到未分叉区块
             long tempBlockHeight = localBlockchainHeight;
             while (true){
@@ -140,6 +140,27 @@ public class SynchronizeRemoteNodeBlockServiceImpl implements SynchronizeRemoteN
                     break;
                 }
             }
+
+            synchronizerDataBase.addDataTransferFinishFlag(nodeId);
+            //数据库里nodeid的数据必须清空：清空说明这些数据已经被区块链系统使用
+            //最大允许的同步时间
+            int maxTimestamp = 60*60*1000;
+            //当前花费的同步时间
+            int totalTimestamp = 0;
+            //检测时间间隔
+            long timestamp = 10*1000;
+            while (true){
+                List<String> allNodeId = synchronizerDataBase.getAllNodeId();
+                if(allNodeId == null || !allNodeId.contains(nodeId)){
+                    break;
+                }
+                ThreadUtil.sleep(timestamp);
+                totalTimestamp += timestamp;
+                if(totalTimestamp > maxTimestamp){
+                    logger.error(String.format("节点[%s:%d]数据太长时间没有被区块链系统使用，请检查原因",node.getIp(),GlobalSetting.DEFAULT_PORT));
+                    synchronizerDataBase.clear(nodeId);
+                }
+            }
         } else {
             //未分叉
             long tempBlockHeight = localBlockchainHeight + LongUtil.ONE;
@@ -152,8 +173,10 @@ public class SynchronizeRemoteNodeBlockServiceImpl implements SynchronizeRemoteN
 
                 ServiceResult<QueryBlockHashByBlockHeightResponse> queryBlockHashByBlockHeightResponseServiceResult = blockchainNodeClient.queryBlockHashByBlockHeight(node,tempBlockHeight);
                 if(!ServiceResult.isSuccess(queryBlockHashByBlockHeightResponseServiceResult)){
-                    break;
+                    synchronizerDataBase.clear(nodeId);
+                    return;
                 }
+
                 Block block = Dto2ModelTool.blockDto2Block(blockchainDataBase,blockDTO);
                 boolean isAddBlockSuccess = blockchainDataBase.addBlock(block);
                 if(!isAddBlockSuccess){
@@ -161,26 +184,6 @@ public class SynchronizeRemoteNodeBlockServiceImpl implements SynchronizeRemoteN
                     return;
                 }
                 tempBlockHeight = tempBlockHeight + LongUtil.ONE;
-            }
-        }
-        synchronizerDataBase.addDataTransferFinishFlag(nodeId);
-        //数据库里nodeid的数据必须清空：清空说明这些数据已经被区块链系统使用
-        //最大允许的同步时间
-        int maxTimestamp = 60*60*1000;
-        //当前花费的同步时间
-        int totalTimestamp = 0;
-        //检测时间间隔
-        long timestamp = 10*1000;
-        while (true){
-            List<String> allNodeId = synchronizerDataBase.getAllNodeId();
-            if(allNodeId == null || !allNodeId.contains(nodeId)){
-                break;
-            }
-            ThreadUtil.sleep(timestamp);
-            totalTimestamp += timestamp;
-            if(totalTimestamp > maxTimestamp){
-                logger.error(String.format("节点[%s:%d]数据太长时间没有被区块链系统使用，请检查原因",node.getIp(),GlobalSetting.DEFAULT_PORT));
-                synchronizerDataBase.clear(nodeId);
             }
         }
     }
