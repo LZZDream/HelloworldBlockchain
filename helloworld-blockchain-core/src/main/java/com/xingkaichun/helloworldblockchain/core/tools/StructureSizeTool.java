@@ -110,6 +110,7 @@ public class StructureSizeTool {
                 //交易金额所占存储容量不需要校验  假设不正确，则在随后的业务逻辑中走不通
                 //校验脚本存储容量
                 ScriptLockDTO scriptLockDTO = transactionOutputDTO.getScriptLockDTO();
+                //TODO 操作码 操作数 大小长度校验
                 if(calculateScriptTextSize(scriptLockDTO) > GlobalSetting.ScriptConstant.SCRIPT_OUTPUT_TEXT_MAX_SIZE){
                     logger.debug("交易校验失败：交易输出脚本所占存储空间超出限制。");
                     return false;
