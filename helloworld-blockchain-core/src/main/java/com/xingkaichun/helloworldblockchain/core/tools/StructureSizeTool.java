@@ -1,22 +1,23 @@
 package com.xingkaichun.helloworldblockchain.core.tools;
 
 import com.xingkaichun.helloworldblockchain.core.model.Block;
-import com.xingkaichun.helloworldblockchain.core.model.script.Script;
-import com.xingkaichun.helloworldblockchain.core.model.script.ScriptKey;
-import com.xingkaichun.helloworldblockchain.core.model.script.ScriptLock;
 import com.xingkaichun.helloworldblockchain.core.model.transaction.Transaction;
 import com.xingkaichun.helloworldblockchain.core.model.transaction.TransactionInput;
 import com.xingkaichun.helloworldblockchain.core.model.transaction.TransactionOutput;
 import com.xingkaichun.helloworldblockchain.core.model.transaction.TransactionType;
-import com.xingkaichun.helloworldblockchain.util.LongUtil;
+import com.xingkaichun.helloworldblockchain.netcore.transport.dto.*;
 import com.xingkaichun.helloworldblockchain.setting.GlobalSetting;
+import com.xingkaichun.helloworldblockchain.util.LongUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 /**
- * 存放有关存储容量有关的常量，例如区块最大的存储容量，交易最大的存储容量
+ * (区块、交易)结构大小工具类
+ *
+ * 存储大小是基于DTO对象计算的。考虑到多种语言实现区块链，若采用不同语言实现所构造的model计算大小，可能比较复杂。
+ * 而DTO本身能组成区块链的完整数据，DTO数据又比较精简，所以基于DTO计算区块大小、交易大小非常方便。
  *
  * @author 邢开春 微信HelloworldBlockchain 邮箱xingkaichun@qq.com
  */
@@ -29,20 +30,15 @@ public class StructureSizeTool {
      * 校验区块的存储容量是否合法：用来限制区块所占存储空间的大小。
      */
     public static boolean isBlockStorageCapacityLegal(Block block) {
-        //校验时间戳占用存储空间
-        long timestamp = block.getTimestamp();
-        //校验时间的长度
-        if(String.valueOf(timestamp).length() < GlobalSetting.BlockConstant.BLOCK_TEXT_TIMESTAMP_MIN_SIZE){
-            logger.debug("区块校验失败：区块时间戳所占存储空间过小。");
-            return false;
-        }
-        if(String.valueOf(timestamp).length() > GlobalSetting.BlockConstant.BLOCK_TEXT_TIMESTAMP_MAX_SIZE){
-            logger.debug("区块校验失败：区块时间戳所占存储空间过大。");
-            return false;
-        }
+        return isBlockStorageCapacityLegal(Model2DtoTool.block2BlockDTO(block));
+    }
+    public static boolean isBlockStorageCapacityLegal(BlockDTO blockDTO) {
+        //区块的时间戳的长度不需要校验  假设时间戳长度不正确，则在随后的业务逻辑中走不通
+
+        //区块的前哈希的长度不需要校验  假设前哈希长度不正确，则在随后的业务逻辑中走不通
 
         //校验共识占用存储空间
-        long nonce = block.getNonce();
+        long nonce = blockDTO.getNonce();
         if(LongUtil.isLessThan(nonce, GlobalSetting.BlockConstant.MIN_NONCE)){
             return false;
         }
@@ -51,17 +47,17 @@ public class StructureSizeTool {
         }
 
         //校验区块中的交易占用的存储空间
-        long blockTextSize = calculateBlockTextSize(block);
+        long blockTextSize = calculateBlockTextSize(blockDTO);
         if(blockTextSize > GlobalSetting.BlockConstant.BLOCK_TEXT_MAX_SIZE){
             logger.debug(String.format("区块数据异常，区块容量超过限制。"));
             return false;
         }
 
-        List<Transaction> transactions = block.getTransactions();
-        //校验交易的大小
-        if(transactions != null){
-            for(Transaction transaction:transactions){
-                if(!isTransactionStorageCapacityLegal(transaction)){
+        //校验每一笔交易占用的存储空间
+        List<TransactionDTO> transactionDtoList = blockDTO.getTransactionDtoList();
+        if(transactionDtoList != null){
+            for(TransactionDTO transactionDTO:transactionDtoList){
+                if(!isTransactionStorageCapacityLegal(transactionDTO)){
                     logger.debug("交易数据异常，交易的容量非法。");
                     return false;
                 }
@@ -69,25 +65,11 @@ public class StructureSizeTool {
         }
         return true;
     }
-
     /**
      * 校验交易的存储容量是否合法：用来限制交易的所占存储空间的大小。
      */
     public static boolean isTransactionStorageCapacityLegal(Transaction transaction) {
-        List<TransactionInput> inputs = transaction.getInputs();
         List<TransactionOutput> outputs = transaction.getOutputs();
-
-        //校验交易输入
-        if(inputs != null){
-            for(TransactionInput transactionInput:inputs){
-                ScriptKey scriptKey = transactionInput.getScriptKey();
-                if(calculateScriptTextSize(scriptKey) > GlobalSetting.ScriptConstant.SCRIPT_INPUT_TEXT_MAX_SIZE){
-                    logger.debug("交易校验失败：交易输入脚本所占存储空间超出限制。");
-                    return false;
-                }
-            }
-        }
-
         //校验交易输出
         if(outputs != null){
             for(TransactionOutput transactionOutput:outputs){
@@ -100,15 +82,35 @@ public class StructureSizeTool {
                     logger.debug("账户地址长度过长");
                     return false;
                 }
+            }
+        }
+        return isTransactionStorageCapacityLegal(Model2DtoTool.transaction2TransactionDTO(transaction));
+    }
 
-                long value = transactionOutput.getValue();
-                if(calculateLongTextSize(value)> GlobalSetting.TransactionConstant.TRANSACTION_TEXT_VALUE_MAX_SIZE){
-                    logger.debug("交易校验失败：交易金额所占存储空间超出限制。");
+    public static boolean isTransactionStorageCapacityLegal(TransactionDTO transactionDTO) {
+        List<TransactionInputDTO> transactionInputDtoList = transactionDTO.getTransactionInputDtoList();
+        List<TransactionOutputDTO> transactionOutputDtoList = transactionDTO.getTransactionOutputDtoList();
+
+        //校验交易输入
+        if(transactionInputDtoList != null){
+            for(TransactionInputDTO transactionInputDTO:transactionInputDtoList){
+                //交易的未花费输出所占存储容量不需要校验  假设不正确，则在随后的业务逻辑中走不通
+                //校验脚本存储容量
+                ScriptKeyDTO scriptKeyDTO = transactionInputDTO.getScriptKeyDTO();
+                if(calculateScriptTextSize(scriptKeyDTO) > GlobalSetting.ScriptConstant.SCRIPT_INPUT_TEXT_MAX_SIZE){
+                    logger.debug("交易校验失败：交易输入脚本所占存储空间超出限制。");
                     return false;
                 }
+            }
+        }
 
-                ScriptLock scriptLock = transactionOutput.getScriptLock();
-                if(calculateScriptTextSize(scriptLock) > GlobalSetting.ScriptConstant.SCRIPT_OUTPUT_TEXT_MAX_SIZE){
+        //校验交易输出
+        if(transactionOutputDtoList != null){
+            for(TransactionOutputDTO transactionOutputDTO:transactionOutputDtoList){
+                //交易金额所占存储容量不需要校验  假设不正确，则在随后的业务逻辑中走不通
+                //校验脚本存储容量
+                ScriptLockDTO scriptLockDTO = transactionOutputDTO.getScriptLockDTO();
+                if(calculateScriptTextSize(scriptLockDTO) > GlobalSetting.ScriptConstant.SCRIPT_OUTPUT_TEXT_MAX_SIZE){
                     logger.debug("交易校验失败：交易输出脚本所占存储空间超出限制。");
                     return false;
                 }
@@ -116,7 +118,7 @@ public class StructureSizeTool {
         }
 
         //校验整笔交易所占存储空间
-        if(calculateTransactionTextSize(transaction) > GlobalSetting.BlockConstant.TRANSACTION_TEXT_MAX_SIZE){
+        if(calculateTransactionTextSize(transactionDTO) > GlobalSetting.BlockConstant.TRANSACTION_TEXT_MAX_SIZE){
             logger.debug("交易数据异常，交易所占存储空间太大。");
             return false;
         }
@@ -128,72 +130,84 @@ public class StructureSizeTool {
 
     //region 计算文本大小
     public static long calculateBlockTextSize(Block block) {
+        return calculateBlockTextSize(Model2DtoTool.block2BlockDTO(block));
+    }
+    public static long calculateBlockTextSize(BlockDTO blockDTO) {
         long size = 0;
-        long timestamp = block.getTimestamp();
-        size += String.valueOf(timestamp).length();
+        long timestamp = blockDTO.getTimestamp();
+        size += calculateLongTextSize(timestamp);
 
-        List<Transaction> transactions = block.getTransactions();
-        for(Transaction transaction:transactions){
-            size += calculateTransactionTextSize(transaction);
+        String previousBlockHash = blockDTO.getPreviousBlockHash();
+        size += previousBlockHash.length();
+
+        long nonce = blockDTO.getNonce();
+        size += calculateLongTextSize(nonce);
+
+        List<TransactionDTO> transactionDtoList = blockDTO.getTransactionDtoList();
+        for(TransactionDTO transactionDTO:transactionDtoList){
+            size += calculateTransactionTextSize(transactionDTO);
         }
-
-        size += calculateLongTextSize(block.getNonce());
         return size;
     }
-    //TODO 计算DTO的大小
     public static long calculateTransactionTextSize(Transaction transaction) {
+        return calculateTransactionTextSize(Model2DtoTool.transaction2TransactionDTO(transaction));
+    }
+    public static long calculateTransactionTextSize(TransactionDTO transactionDTO) {
         long size = 0;
-        List<TransactionInput> inputs = transaction.getInputs();
-        size += calculateTransactionInputTextSize(inputs);
-        List<TransactionOutput> outputs = transaction.getOutputs();
-        size += calculateTransactionOutputTextSize(outputs);
+        List<TransactionInputDTO> transactionInputDtoList = transactionDTO.getTransactionInputDtoList();
+        size += calculateTransactionInputTextSize(transactionInputDtoList);
+        List<TransactionOutputDTO> transactionOutputDtoList = transactionDTO.getTransactionOutputDtoList();
+        size += calculateTransactionOutputTextSize(transactionOutputDtoList);
         return size;
     }
-    private static long calculateTransactionOutputTextSize(List<TransactionOutput> outputs) {
+    private static long calculateTransactionOutputTextSize(List<TransactionOutputDTO> transactionOutputDtoList) {
         long size = 0;
-        if(outputs == null || outputs.size()==0){
+        if(transactionOutputDtoList == null || transactionOutputDtoList.size()==0){
             return size;
         }
-        for(TransactionOutput transactionOutput:outputs){
-            size += calculateTransactionOutputTextSize(transactionOutput);
+        for(TransactionOutputDTO transactionOutputDTO:transactionOutputDtoList){
+            size += calculateTransactionOutputTextSize(transactionOutputDTO);
         }
         return size;
     }
-    private static long calculateTransactionOutputTextSize(TransactionOutput output) {
+    private static long calculateTransactionOutputTextSize(TransactionOutputDTO transactionOutputDTO) {
         long size = 0;
-        if(output == null){
-            return 0L;
-        }
-        String address = output.getAddress();
-        size += address.length();
-        long value = output.getValue();
+        ScriptLockDTO scriptLockDTO = transactionOutputDTO.getScriptLockDTO();
+        size += calculateScriptTextSize(scriptLockDTO);
+        long value = transactionOutputDTO.getValue();
         size += calculateLongTextSize(value);
-        ScriptLock scriptLock = output.getScriptLock();
-        size += calculateScriptTextSize(scriptLock);
         return size;
     }
-    private static long calculateTransactionInputTextSize(List<TransactionInput> inputs) {
+    private static long calculateTransactionOutputTextSize(UnspendTransactionOutputDTO unspendTransactionOutputDTO) {
+        long size = 0;
+        String address = unspendTransactionOutputDTO.getTransactionHash();
+        size += address.length();
+        long value = unspendTransactionOutputDTO.getTransactionOutputIndex();
+        size += calculateLongTextSize(value);
+        return size;
+    }
+    private static long calculateTransactionInputTextSize(List<TransactionInputDTO> inputs) {
         long size = 0;
         if(inputs == null || inputs.size()==0){
             return size;
         }
-        for(TransactionInput transactionInput:inputs){
-            size += calculateTransactionInputTextSize(transactionInput);
+        for(TransactionInputDTO transactionInputDTO:inputs){
+            size += calculateTransactionInputTextSize(transactionInputDTO);
         }
         return size;
     }
-    private static long calculateTransactionInputTextSize(TransactionInput input) {
+    private static long calculateTransactionInputTextSize(TransactionInputDTO input) {
         long size = 0;
         if(input == null){
             return size;
         }
-        TransactionOutput unspendTransactionOutput = input.getUnspendTransactionOutput();
-        size += calculateTransactionOutputTextSize(unspendTransactionOutput);
-        ScriptKey scriptKey = input.getScriptKey();
-        size += calculateScriptTextSize(scriptKey);
+        UnspendTransactionOutputDTO unspendTransactionOutputDTO = input.getUnspendTransactionOutputDTO();
+        size += calculateTransactionOutputTextSize(unspendTransactionOutputDTO);
+        ScriptKeyDTO scriptKeyDTO = input.getScriptKeyDTO();
+        size += calculateScriptTextSize(scriptKeyDTO);
         return size;
     }
-    private static long calculateScriptTextSize(Script script) {
+    private static long calculateScriptTextSize(ScriptDTO script) {
         long size = 0;
         if(script == null || script.size()==0){
             return size;

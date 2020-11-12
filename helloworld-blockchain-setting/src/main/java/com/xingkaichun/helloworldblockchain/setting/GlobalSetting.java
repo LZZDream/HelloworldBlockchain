@@ -96,11 +96,6 @@ public class GlobalSetting {
         public static final long MAX_NONCE = Long.MAX_VALUE;
         //nonce最小值
         public static final long MIN_NONCE = 0;
-
-        //区块时间戳最小存储容量
-        public static final long BLOCK_TEXT_TIMESTAMP_MIN_SIZE = 13;
-        //区块时间戳最大存储容量
-        public static final long BLOCK_TEXT_TIMESTAMP_MAX_SIZE = 13;
     }
 
     /**
@@ -117,16 +112,10 @@ public class GlobalSetting {
         public static final long TRANSACTION_MAX_OUTPUT_COUNT = 100L;
 
 
-        //交易金额最大存储容量
-        public static final long TRANSACTION_TEXT_VALUE_MAX_SIZE = 20;
         //交易地址最小存储容量
         public static final long TRANSACTION_TEXT_ADDRESS_MIN_SIZE = 20;
         //交易地址最大存储容量
         public static final long TRANSACTION_TEXT_ADDRESS_MAX_SIZE = 40;
-        //交易时间戳最小存储容量
-        public static final long TRANSACTION_TEXT_TIMESTAMP_MIN_SIZE = 13;
-        //交易时间戳最大存储容量
-        public static final long TRANSACTION_TEXT_TIMESTAMP_MAX_SIZE = 13;
     }
 
     /**
