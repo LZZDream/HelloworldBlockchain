@@ -18,16 +18,10 @@ public class MerkleTreeUtil {
      * https://blog.csdn.net/jason_cuijiahui/article/details/79011118
      * https://www.cnblogs.com/web-java/articles/5544093.html
      * 摘抄于bitcoinj-core-0.15.8.jar!\org\bitcoinj\core\Block.java MerkleRoot()方法
-     * //TODO 代码添加注释
+     *
      * @author 邢开春 微信HelloworldBlockchain 邮箱xingkaichun@qq.com
      */
     public static byte[] calculateMerkleTreeRoot(List<byte[]> dataList) {
-        if(dataList == null || dataList.size() == 0){
-            throw new RuntimeException("数据不能为空");
-        }
-        if(dataList.size() == 1){
-            return dataList.get(0);
-        }
         List<byte[]> tree = new ArrayList<>(dataList);
         int size = tree.size();
         int levelOffset = 0;
