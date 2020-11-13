@@ -69,21 +69,6 @@ public class StructureSizeTool {
      * 校验交易的存储容量是否合法：用来限制交易的所占存储空间的大小。
      */
     public static boolean isTransactionStorageCapacityLegal(Transaction transaction) {
-        List<TransactionOutput> outputs = transaction.getOutputs();
-        //校验交易输出
-        if(outputs != null){
-            for(TransactionOutput transactionOutput:outputs){
-                String address = transactionOutput.getAddress();
-                if(address.length() < GlobalSetting.TransactionConstant.TRANSACTION_TEXT_ADDRESS_MIN_SIZE){
-                    logger.debug("账户地址长度过短");
-                    return false;
-                }
-                if(address.length() > GlobalSetting.TransactionConstant.TRANSACTION_TEXT_ADDRESS_MAX_SIZE){
-                    logger.debug("账户地址长度过长");
-                    return false;
-                }
-            }
-        }
         return isTransactionStorageCapacityLegal(Model2DtoTool.transaction2TransactionDTO(transaction));
     }
 

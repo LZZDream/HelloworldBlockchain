@@ -101,12 +101,6 @@ public class GlobalSetting {
     /**
      * TODO 交易设置 地址的大小 其实在操作码 操作数中 就已经规定了最大值
      */
-    public static class TransactionConstant{
-        //交易地址最小存储容量
-        public static final long TRANSACTION_TEXT_ADDRESS_MIN_SIZE = 20;
-        //交易地址最大存储容量
-        public static final long TRANSACTION_TEXT_ADDRESS_MAX_SIZE = 40;
-    }
 
     /**
      * 脚本设置
