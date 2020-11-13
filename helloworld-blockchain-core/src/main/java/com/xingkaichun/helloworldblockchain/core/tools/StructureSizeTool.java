@@ -299,7 +299,7 @@ public class StructureSizeTool {
                 return false;
             }
         }
-        if(calculateScriptTextSize(scriptDTO) > GlobalSetting.ScriptConstant.SCRIPT_OUTPUT_TEXT_MAX_SIZE){
+        if(calculateScriptTextSize(scriptDTO) > GlobalSetting.ScriptConstant.SCRIPT_TEXT_MAX_SIZE){
             logger.debug("交易校验失败：交易输出脚本所占存储空间超出限制。");
             return false;
         }

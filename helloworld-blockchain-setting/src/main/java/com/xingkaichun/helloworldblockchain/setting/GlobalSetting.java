@@ -102,15 +102,8 @@ public class GlobalSetting {
      * 脚本设置
      */
     public static class ScriptConstant{
-        //输入脚本最大存储容量
-        public static final long SCRIPT_INPUT_TEXT_MAX_SIZE = 1024;
-        //输出脚本最大存储容量
-        public static final long SCRIPT_OUTPUT_TEXT_MAX_SIZE = 1024;
-
-        //脚本操作码/操作数最小存储容量
-        public static final long SCRIPT_OPERATION_TEXT_MIN_SIZE = 1;
-        //脚本操作码/操作数最大存储容量
-        public static final long SCRIPT_OPERATION_TEXT_MAX_SIZE = 64;
+        //脚本最大存储容量
+        public static final long SCRIPT_TEXT_MAX_SIZE = 1024;
     }
 
     /**
