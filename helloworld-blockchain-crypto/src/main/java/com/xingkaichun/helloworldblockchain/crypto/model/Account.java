@@ -14,8 +14,11 @@ import java.io.Serializable;
  */
 public class Account implements Serializable {
 
+    //私钥
     private String privateKey;
+    //公钥
     private String publicKey;
+    //地址
     private String address;
 
     public Account(String privateKey, String publicKey, String address) {
