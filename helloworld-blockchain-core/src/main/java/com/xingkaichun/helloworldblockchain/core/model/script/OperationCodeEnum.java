@@ -38,7 +38,7 @@ public enum OperationCodeEnum {
      * 将下一个数据[最大256位/32字节]放入栈
      * OPERATION_CODE_PUSH_DATA
      */
-    OP_PUSHDATA(new byte[]{(byte)0x04}, "OP_PUSHDATA");
+    OP_PUSHDATA32(new byte[]{(byte)0x04}, "OP_PUSHDATA32");
 
 
 

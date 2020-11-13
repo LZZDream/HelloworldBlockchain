@@ -1,16 +1,19 @@
 package com.xingkaichun.helloworldblockchain.core.tools;
 
 import com.xingkaichun.helloworldblockchain.core.model.Block;
+import com.xingkaichun.helloworldblockchain.core.model.script.OperationCodeEnum;
 import com.xingkaichun.helloworldblockchain.core.model.transaction.Transaction;
 import com.xingkaichun.helloworldblockchain.core.model.transaction.TransactionInput;
 import com.xingkaichun.helloworldblockchain.core.model.transaction.TransactionOutput;
 import com.xingkaichun.helloworldblockchain.core.model.transaction.TransactionType;
+import com.xingkaichun.helloworldblockchain.crypto.HexUtil;
 import com.xingkaichun.helloworldblockchain.netcore.transport.dto.*;
 import com.xingkaichun.helloworldblockchain.setting.GlobalSetting;
 import com.xingkaichun.helloworldblockchain.util.LongUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -82,8 +85,8 @@ public class StructureSizeTool {
                 //交易的未花费输出所占存储容量不需要校验  假设不正确，则在随后的业务逻辑中走不通
                 //校验脚本存储容量
                 ScriptKeyDTO scriptKeyDTO = transactionInputDTO.getScriptKeyDTO();
-                if(calculateScriptTextSize(scriptKeyDTO) > GlobalSetting.ScriptConstant.SCRIPT_INPUT_TEXT_MAX_SIZE){
-                    logger.debug("交易校验失败：交易输入脚本所占存储空间超出限制。");
+                //校验脚本操作码操作数的容量
+                if(!isScriptStorageCapacityLegal(scriptKeyDTO)){
                     return false;
                 }
             }
@@ -95,11 +98,11 @@ public class StructureSizeTool {
                 //交易金额所占存储容量不需要校验  假设不正确，则在随后的业务逻辑中走不通
                 //校验脚本存储容量
                 ScriptLockDTO scriptLockDTO = transactionOutputDTO.getScriptLockDTO();
-                //TODO 操作码 操作数 大小长度校验
-                if(calculateScriptTextSize(scriptLockDTO) > GlobalSetting.ScriptConstant.SCRIPT_OUTPUT_TEXT_MAX_SIZE){
-                    logger.debug("交易校验失败：交易输出脚本所占存储空间超出限制。");
+                //校验脚本操作码操作数的容量
+                if(!isScriptStorageCapacityLegal(scriptLockDTO)){
                     return false;
                 }
+
             }
         }
 
@@ -271,5 +274,35 @@ public class StructureSizeTool {
             logger.debug("交易数据异常：不能识别的交易的类型。");
             return false;
         }
+    }
+
+    /**
+     * 校验脚本操作码、操作数的存储容量
+     * 校验脚本的存储容量
+     */
+    public static boolean isScriptStorageCapacityLegal(ScriptDTO scriptDTO) {
+        for(int i=0;i<scriptDTO.size();i++){
+            String operationCode = scriptDTO.get(i);
+            byte[] bytesOperationCode = HexUtil.hexStringToBytes(operationCode);
+            if(Arrays.equals(OperationCodeEnum.OP_DUP.getCode(),bytesOperationCode) ||
+                    Arrays.equals(OperationCodeEnum.OP_HASH160.getCode(),bytesOperationCode) ||
+                    Arrays.equals(OperationCodeEnum.OP_EQUALVERIFY.getCode(),bytesOperationCode) ||
+                    Arrays.equals(OperationCodeEnum.OP_CHECKSIG.getCode(),bytesOperationCode)){
+
+            }else if(Arrays.equals(OperationCodeEnum.OP_PUSHDATA32.getCode(),bytesOperationCode)){
+                String operationData = scriptDTO.get(++i);
+                byte[] bytesOperationData = HexUtil.hexStringToBytes(operationData);
+                if(bytesOperationData.length > 32){
+                    return false;
+                }
+            }else {
+                return false;
+            }
+        }
+        if(calculateScriptTextSize(scriptDTO) > GlobalSetting.ScriptConstant.SCRIPT_OUTPUT_TEXT_MAX_SIZE){
+            logger.debug("交易校验失败：交易输出脚本所占存储空间超出限制。");
+            return false;
+        }
+        return true;
     }
 }
