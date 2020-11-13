@@ -1,6 +1,6 @@
 package com.xingkaichun.helloworldblockchain.core.model.transaction;
 
-import com.xingkaichun.helloworldblockchain.core.model.script.ScriptKey;
+import com.xingkaichun.helloworldblockchain.core.model.script.InputScript;
 
 import java.io.Serializable;
 
@@ -23,7 +23,7 @@ public class TransactionInput implements Serializable {
      * 不允许用户拿到脚本钥匙然后就使用这个交易输出，并能够成功组装自己的交易。
      * 假如新组装的交易先于老交易被区块链网络接受，这就相当于恶意用户花了别人的交易输出。
      */
-    private ScriptKey scriptKey;
+    private InputScript inputScript;
 
 
 
@@ -39,12 +39,12 @@ public class TransactionInput implements Serializable {
         this.unspendTransactionOutput = unspendTransactionOutput;
     }
 
-    public ScriptKey getScriptKey() {
-        return scriptKey;
+    public InputScript getInputScript() {
+        return inputScript;
     }
 
-    public void setScriptKey(ScriptKey scriptKey) {
-        this.scriptKey = scriptKey;
+    public void setInputScript(InputScript inputScript) {
+        this.inputScript = inputScript;
     }
 
     //endregion

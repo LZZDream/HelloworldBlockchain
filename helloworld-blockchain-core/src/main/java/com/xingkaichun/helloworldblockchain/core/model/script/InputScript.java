@@ -5,6 +5,6 @@ package com.xingkaichun.helloworldblockchain.core.model.script;
  * //TODO Input Script
  * @author 邢开春 微信HelloworldBlockchain 邮箱xingkaichun@qq.com
  */
-public class ScriptKey extends Script {
+public class InputScript extends Script {
 
 }

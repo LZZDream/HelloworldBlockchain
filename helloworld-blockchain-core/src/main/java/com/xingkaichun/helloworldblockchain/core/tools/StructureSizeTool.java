@@ -84,9 +84,9 @@ public class StructureSizeTool {
             for(TransactionInputDTO transactionInputDTO:transactionInputDtoList){
                 //交易的未花费输出所占存储容量不需要校验  假设不正确，则在随后的业务逻辑中走不通
                 //校验脚本存储容量
-                ScriptKeyDTO scriptKeyDTO = transactionInputDTO.getScriptKeyDTO();
+                InputScriptDTO inputScriptDTO = transactionInputDTO.getInputScriptDTO();
                 //校验脚本操作码操作数的容量
-                if(!isScriptStorageCapacityLegal(scriptKeyDTO)){
+                if(!isScriptStorageCapacityLegal(inputScriptDTO)){
                     return false;
                 }
             }
@@ -97,9 +97,9 @@ public class StructureSizeTool {
             for(TransactionOutputDTO transactionOutputDTO:transactionOutputDtoList){
                 //交易金额所占存储容量不需要校验  假设不正确，则在随后的业务逻辑中走不通
                 //校验脚本存储容量
-                ScriptLockDTO scriptLockDTO = transactionOutputDTO.getScriptLockDTO();
+                OutputScriptDTO outputScriptDTO = transactionOutputDTO.getOutputScriptDTO();
                 //校验脚本操作码操作数的容量
-                if(!isScriptStorageCapacityLegal(scriptLockDTO)){
+                if(!isScriptStorageCapacityLegal(outputScriptDTO)){
                     return false;
                 }
 
@@ -161,8 +161,8 @@ public class StructureSizeTool {
     }
     private static long calculateTransactionOutputTextSize(TransactionOutputDTO transactionOutputDTO) {
         long size = 0;
-        ScriptLockDTO scriptLockDTO = transactionOutputDTO.getScriptLockDTO();
-        size += calculateScriptTextSize(scriptLockDTO);
+        OutputScriptDTO outputScriptDTO = transactionOutputDTO.getOutputScriptDTO();
+        size += calculateScriptTextSize(outputScriptDTO);
         long value = transactionOutputDTO.getValue();
         size += calculateLongTextSize(value);
         return size;
@@ -192,8 +192,8 @@ public class StructureSizeTool {
         }
         UnspendTransactionOutputDTO unspendTransactionOutputDTO = input.getUnspendTransactionOutputDTO();
         size += calculateTransactionOutputTextSize(unspendTransactionOutputDTO);
-        ScriptKeyDTO scriptKeyDTO = input.getScriptKeyDTO();
-        size += calculateScriptTextSize(scriptKeyDTO);
+        InputScriptDTO inputScriptDTO = input.getInputScriptDTO();
+        size += calculateScriptTextSize(inputScriptDTO);
         return size;
     }
     private static long calculateScriptTextSize(ScriptDTO script) {

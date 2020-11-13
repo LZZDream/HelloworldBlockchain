@@ -56,15 +56,15 @@ public class StackBasedVirtualMachine {
         return stack;
     }
 
-    public static Script createPayToClassicAddressScript(ScriptKey scriptKey, ScriptLock scriptLock) {
+    public static Script createPayToClassicAddressScript(InputScript inputScript, OutputScript outputScript) {
         Script script = new Script();
-        script.addAll(scriptKey);
-        script.addAll(scriptLock);
+        script.addAll(inputScript);
+        script.addAll(outputScript);
         return script;
     }
 
-    public static ScriptKey createPayToPublicKeyHashInputScript(String sign, String publicKey) {
-        ScriptKey script = new ScriptKey();
+    public static InputScript createPayToPublicKeyHashInputScript(String sign, String publicKey) {
+        InputScript script = new InputScript();
         script.add(HexUtil.bytesToHexString(OperationCodeEnum.OP_PUSHDATA32.getCode()));
         script.add(sign);
         script.add(HexUtil.bytesToHexString(OperationCodeEnum.OP_PUSHDATA32.getCode()));
@@ -72,8 +72,8 @@ public class StackBasedVirtualMachine {
         return script;
     }
 
-    public static ScriptLock createPayToPublicKeyHashOutputScript(String address) {
-        ScriptLock script = new ScriptLock();
+    public static OutputScript createPayToPublicKeyHashOutputScript(String address) {
+        OutputScript script = new OutputScript();
         script.add(HexUtil.bytesToHexString(OperationCodeEnum.OP_DUP.getCode()));
         script.add(HexUtil.bytesToHexString(OperationCodeEnum.OP_HASH160.getCode()));
         script.add(HexUtil.bytesToHexString(OperationCodeEnum.OP_PUSHDATA32.getCode()));

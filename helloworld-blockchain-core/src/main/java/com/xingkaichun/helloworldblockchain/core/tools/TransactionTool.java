@@ -99,7 +99,7 @@ public class TransactionTool {
             List<TransactionInput> inputs = transaction.getInputs();
             if(inputs != null && inputs.size()!=0){
                 for(TransactionInput transactionInput:inputs){
-                    Script payToClassicAddressScript = StackBasedVirtualMachine.createPayToClassicAddressScript(transactionInput.getScriptKey(),transactionInput.getUnspendTransactionOutput().getScriptLock());
+                    Script payToClassicAddressScript = StackBasedVirtualMachine.createPayToClassicAddressScript(transactionInput.getInputScript(),transactionInput.getUnspendTransactionOutput().getOutputScript());
                     StackBasedVirtualMachine stackBasedVirtualMachine = new StackBasedVirtualMachine();
                     ScriptExecuteResult scriptExecuteResult = stackBasedVirtualMachine.executeScript(transaction,payToClassicAddressScript);
                     if(scriptExecuteResult.size()!=1 || !Boolean.valueOf(scriptExecuteResult.pop())){
@@ -152,7 +152,7 @@ public class TransactionTool {
         if(outputs != null){
             for(TransactionOutputDTO transactionOutputDTO:outputs){
                 byte[] bytesValue = ByteUtil.longToBytes8(transactionOutputDTO.getValue());
-                byte[] bytesScriptLock = ScriptTool.bytesScript(transactionOutputDTO.getScriptLockDTO());
+                byte[] bytesScriptLock = ScriptTool.bytesScript(transactionOutputDTO.getOutputScriptDTO());
                 byte[] bytesTransactionOutput = Bytes.concat(ByteUtil.concatLengthBytes(bytesValue),
                         ByteUtil.concatLengthBytes(bytesScriptLock));
                 bytesTransactionOutputList.add(bytesTransactionOutput);

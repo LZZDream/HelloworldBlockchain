@@ -14,7 +14,7 @@ public class TransactionOutputDTO implements Serializable {
     //交易输出的金额
     private long value;
     //脚本锁
-    private ScriptLockDTO scriptLockDTO;
+    private OutputScriptDTO outputScriptDTO;
 
 
 
@@ -29,12 +29,12 @@ public class TransactionOutputDTO implements Serializable {
         this.value = value;
     }
 
-    public ScriptLockDTO getScriptLockDTO() {
-        return scriptLockDTO;
+    public OutputScriptDTO getOutputScriptDTO() {
+        return outputScriptDTO;
     }
 
-    public void setScriptLockDTO(ScriptLockDTO scriptLockDTO) {
-        this.scriptLockDTO = scriptLockDTO;
+    public void setOutputScriptDTO(OutputScriptDTO outputScriptDTO) {
+        this.outputScriptDTO = outputScriptDTO;
     }
 
     //endregion

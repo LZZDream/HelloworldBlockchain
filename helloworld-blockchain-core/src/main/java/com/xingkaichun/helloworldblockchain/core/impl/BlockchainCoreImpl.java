@@ -5,8 +5,8 @@ import com.xingkaichun.helloworldblockchain.core.model.Block;
 import com.xingkaichun.helloworldblockchain.core.model.pay.BuildTransactionRequest;
 import com.xingkaichun.helloworldblockchain.core.model.pay.BuildTransactionResponse;
 import com.xingkaichun.helloworldblockchain.core.model.pay.Recipient;
-import com.xingkaichun.helloworldblockchain.core.model.script.ScriptKey;
-import com.xingkaichun.helloworldblockchain.core.model.script.ScriptLock;
+import com.xingkaichun.helloworldblockchain.core.model.script.InputScript;
+import com.xingkaichun.helloworldblockchain.core.model.script.OutputScript;
 import com.xingkaichun.helloworldblockchain.core.model.transaction.Transaction;
 import com.xingkaichun.helloworldblockchain.core.model.transaction.TransactionOutput;
 import com.xingkaichun.helloworldblockchain.core.tools.Model2DtoTool;
@@ -183,8 +183,8 @@ public class BlockchainCoreImpl extends BlockchainCore {
             for(Recipient recipient : recipientList){
                 TransactionOutputDTO transactionOutputDTO = new TransactionOutputDTO();
                 transactionOutputDTO.setValue(recipient.getValue());
-                ScriptLock scriptLock = StackBasedVirtualMachine.createPayToPublicKeyHashOutputScript(recipient.getAddress());
-                transactionOutputDTO.setScriptLockDTO(Model2DtoTool.scriptLock2ScriptLockDTO(scriptLock));
+                OutputScript outputScript = StackBasedVirtualMachine.createPayToPublicKeyHashOutputScript(recipient.getAddress());
+                transactionOutputDTO.setOutputScriptDTO(Model2DtoTool.scriptLock2ScriptLockDTO(outputScript));
                 transactionOutputDtoList.add(transactionOutputDTO);
             }
         }
@@ -246,8 +246,8 @@ public class BlockchainCoreImpl extends BlockchainCore {
         if(change > 0){
             TransactionOutputDTO transactionOutputDTO = new TransactionOutputDTO();
             transactionOutputDTO.setValue(change);
-            ScriptLock scriptLock = StackBasedVirtualMachine.createPayToPublicKeyHashOutputScript(payerChangeAddress);
-            transactionOutputDTO.setScriptLockDTO(Model2DtoTool.scriptLock2ScriptLockDTO(scriptLock));
+            OutputScript outputScript = StackBasedVirtualMachine.createPayToPublicKeyHashOutputScript(payerChangeAddress);
+            transactionOutputDTO.setOutputScriptDTO(Model2DtoTool.scriptLock2ScriptLockDTO(outputScript));
             transactionDTO.getTransactionOutputDtoList().add(transactionOutputDTO);
         }
 
@@ -257,8 +257,8 @@ public class BlockchainCoreImpl extends BlockchainCore {
             String publicKey = AccountUtil.accountFromPrivateKey(privateKey).getPublicKey();
             TransactionInputDTO transactionInputDTO = transactionInputDtoList.get(i);
             String signature = Model2DtoTool.signature(transactionDTO,privateKey);
-            ScriptKey scriptKey = StackBasedVirtualMachine.createPayToPublicKeyHashInputScript(signature, publicKey);
-            transactionInputDTO.setScriptKeyDTO(Model2DtoTool.scriptKey2ScriptKeyDTO(scriptKey));
+            InputScript inputScript = StackBasedVirtualMachine.createPayToPublicKeyHashInputScript(signature, publicKey);
+            transactionInputDTO.setInputScriptDTO(Model2DtoTool.scriptKey2ScriptKeyDTO(inputScript));
         }
 
 

@@ -39,7 +39,7 @@ public class BlockchainBrowserServiceImpl implements BlockchainBrowserService {
         transactionOutputDetailView.setBlockHash(transactionOutput.getBlockHash());
         transactionOutputDetailView.setTransactionHash(transactionOutput.getTransactionHash());
         transactionOutputDetailView.setValue(transactionOutput.getValue());
-        transactionOutputDetailView.setScriptLock(ScriptTool.toString(transactionOutput.getScriptLock()));
+        transactionOutputDetailView.setScriptLock(ScriptTool.toString(transactionOutput.getOutputScript()));
         transactionOutputDetailView.setTransactionOutputIndex(transactionOutput.getTransactionOutputIndex());
         transactionOutputId.setTransactionHash(transactionOutput.getTransactionHash());
         transactionOutputId.setTransactionOutputIndex(transactionOutput.getTransactionOutputIndex());
@@ -63,7 +63,7 @@ public class BlockchainBrowserServiceImpl implements BlockchainBrowserService {
                     UnspendTransactionOutput unspendTransactionOutput = transactionInput.getUnspendTransactionOutput();
                     if(transactionOutput.getTransactionHash().equals(unspendTransactionOutput.getTransactionHash()) &&
                             transactionOutput.getTransactionOutputIndex()==unspendTransactionOutput.getTransactionOutputIndex()){
-                        transactionOutputDetailView.setScriptKey(ScriptTool.toString(transactionInput.getScriptKey()));
+                        transactionOutputDetailView.setScriptKey(ScriptTool.toString(transactionInput.getInputScript()));
                         break;
                     }
                 }
@@ -160,7 +160,7 @@ public class BlockchainBrowserServiceImpl implements BlockchainBrowserService {
                 TransactionInputView transactionInputView = new TransactionInputView();
                 transactionInputView.setAddress(transactionInput.getUnspendTransactionOutput().getAddress());
                 transactionInputView.setValue(transactionInput.getUnspendTransactionOutput().getValue());
-                transactionInputView.setScriptKey(ScriptTool.toString(transactionInput.getScriptKey()));
+                transactionInputView.setScriptKey(ScriptTool.toString(transactionInput.getInputScript()));
                 transactionInputView.setTransactionHash(transactionInput.getUnspendTransactionOutput().getTransactionHash());
                 transactionInputView.setTransactionOutputIndex(transactionInput.getUnspendTransactionOutput().getTransactionOutputIndex());
                 transactionInputViewList.add(transactionInputView);
@@ -174,7 +174,7 @@ public class BlockchainBrowserServiceImpl implements BlockchainBrowserService {
                 TransactionOutputView transactionOutputView = new TransactionOutputView();
                 transactionOutputView.setAddress(transactionOutput.getAddress());
                 transactionOutputView.setValue(transactionOutput.getValue());
-                transactionOutputView.setScriptLock(ScriptTool.toString(transactionOutput.getScriptLock()));
+                transactionOutputView.setScriptLock(ScriptTool.toString(transactionOutput.getOutputScript()));
                 transactionOutputView.setTransactionHash(transactionOutput.getTransactionHash());
                 transactionOutputView.setTransactionOutputIndex(transactionOutput.getTransactionOutputIndex());
                 transactionOutputViewList.add(transactionOutputView);

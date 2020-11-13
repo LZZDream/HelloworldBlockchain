@@ -3,8 +3,8 @@ package com.xingkaichun.helloworldblockchain.core.tools;
 import com.xingkaichun.helloworldblockchain.core.BlockchainDatabase;
 import com.xingkaichun.helloworldblockchain.core.StackBasedVirtualMachine;
 import com.xingkaichun.helloworldblockchain.core.model.Block;
-import com.xingkaichun.helloworldblockchain.core.model.script.ScriptKey;
-import com.xingkaichun.helloworldblockchain.core.model.script.ScriptLock;
+import com.xingkaichun.helloworldblockchain.core.model.script.InputScript;
+import com.xingkaichun.helloworldblockchain.core.model.script.OutputScript;
 import com.xingkaichun.helloworldblockchain.core.model.transaction.*;
 import com.xingkaichun.helloworldblockchain.crypto.AccountUtil;
 import com.xingkaichun.helloworldblockchain.netcore.transport.dto.*;
@@ -73,7 +73,7 @@ public class Dto2ModelTool {
                 }
                 TransactionInput transactionInput = new TransactionInput();
                 transactionInput.setUnspendTransactionOutput(TransactionTool.transactionOutput2UnspendTransactionOutput(unspendTransactionOutput));
-                transactionInput.setScriptKey(scriptKeyDto2ScriptKey(transactionInputDTO.getScriptKeyDTO()));
+                transactionInput.setInputScript(scriptKeyDto2ScriptKey(transactionInputDTO.getInputScriptDTO()));
                 inputs.add(transactionInput);
             }
         }
@@ -98,11 +98,11 @@ public class Dto2ModelTool {
 
     public static TransactionOutput transactionOutputDto2TransactionOutput(TransactionOutputDTO transactionOutputDTO) {
         TransactionOutput transactionOutput = new TransactionOutput();
-        String publicKeyHash = StackBasedVirtualMachine.getPublicKeyHashByPayToPublicKeyHashOutputScript(transactionOutputDTO.getScriptLockDTO());
+        String publicKeyHash = StackBasedVirtualMachine.getPublicKeyHashByPayToPublicKeyHashOutputScript(transactionOutputDTO.getOutputScriptDTO());
         String address = AccountUtil.addressFromPublicKeyHash(publicKeyHash);
         transactionOutput.setAddress(address);
         transactionOutput.setValue(transactionOutputDTO.getValue());
-        transactionOutput.setScriptLock(scriptLockDto2ScriptLock(transactionOutputDTO.getScriptLockDTO()));
+        transactionOutput.setOutputScript(scriptLockDto2ScriptLock(transactionOutputDTO.getOutputScriptDTO()));
         return transactionOutput;
     }
 
@@ -113,21 +113,21 @@ public class Dto2ModelTool {
         return TransactionType.NORMAL;
     }
 
-    private static ScriptLock scriptLockDto2ScriptLock(ScriptLockDTO scriptLockDTO) {
-        if(scriptLockDTO == null){
+    private static OutputScript scriptLockDto2ScriptLock(OutputScriptDTO outputScriptDTO) {
+        if(outputScriptDTO == null){
             return null;
         }
-        ScriptLock scriptLock = new ScriptLock();
-        scriptLock.addAll(scriptLockDTO);
-        return scriptLock;
+        OutputScript outputScript = new OutputScript();
+        outputScript.addAll(outputScriptDTO);
+        return outputScript;
     }
 
-    private static ScriptKey scriptKeyDto2ScriptKey(ScriptKeyDTO scriptKeyDTO) {
-        if(scriptKeyDTO == null){
+    private static InputScript scriptKeyDto2ScriptKey(InputScriptDTO inputScriptDTO) {
+        if(inputScriptDTO == null){
             return null;
         }
-        ScriptKey scriptKey = new ScriptKey();
-        scriptKey.addAll(scriptKeyDTO);
-        return scriptKey;
+        InputScript inputScript = new InputScript();
+        inputScript.addAll(inputScriptDTO);
+        return inputScript;
     }
 }

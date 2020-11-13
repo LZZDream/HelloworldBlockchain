@@ -1,7 +1,7 @@
 package com.xingkaichun.helloworldblockchain.core.model.transaction;
 
 
-import com.xingkaichun.helloworldblockchain.core.model.script.ScriptLock;
+import com.xingkaichun.helloworldblockchain.core.model.script.OutputScript;
 
 import java.io.Serializable;
 
@@ -20,7 +20,7 @@ public class TransactionOutput extends TransactionOutputId implements Serializab
      * 如何证明用户拥有这个交易输出？
      * 这里我们给交易输出加上一把锁，自然拥有锁对应钥匙的用户可以使用这个交易输出。
      */
-    private ScriptLock scriptLock;
+    private OutputScript outputScript;
 
     /**
      * 交易输出的地址
@@ -58,12 +58,12 @@ public class TransactionOutput extends TransactionOutputId implements Serializab
         this.value = value;
     }
 
-    public ScriptLock getScriptLock() {
-        return scriptLock;
+    public OutputScript getOutputScript() {
+        return outputScript;
     }
 
-    public void setScriptLock(ScriptLock scriptLock) {
-        this.scriptLock = scriptLock;
+    public void setOutputScript(OutputScript outputScript) {
+        this.outputScript = outputScript;
     }
 
     public String getAddress() {

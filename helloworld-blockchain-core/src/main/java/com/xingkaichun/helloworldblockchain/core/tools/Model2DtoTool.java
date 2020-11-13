@@ -2,8 +2,8 @@ package com.xingkaichun.helloworldblockchain.core.tools;
 
 import com.google.gson.Gson;
 import com.xingkaichun.helloworldblockchain.core.model.Block;
-import com.xingkaichun.helloworldblockchain.core.model.script.ScriptKey;
-import com.xingkaichun.helloworldblockchain.core.model.script.ScriptLock;
+import com.xingkaichun.helloworldblockchain.core.model.script.InputScript;
+import com.xingkaichun.helloworldblockchain.core.model.script.OutputScript;
 import com.xingkaichun.helloworldblockchain.core.model.transaction.Transaction;
 import com.xingkaichun.helloworldblockchain.core.model.transaction.TransactionInput;
 import com.xingkaichun.helloworldblockchain.core.model.transaction.TransactionOutput;
@@ -54,7 +54,7 @@ public class Model2DtoTool {
 
                 TransactionInputDTO transactionInputDTO = new TransactionInputDTO();
                 transactionInputDTO.setUnspendTransactionOutputDTO(unspendTransactionOutputDto);
-                transactionInputDTO.setScriptKeyDTO(scriptKey2ScriptKeyDTO(transactionInput.getScriptKey()));
+                transactionInputDTO.setInputScriptDTO(scriptKey2ScriptKeyDTO(transactionInput.getInputScript()));
                 inputs.add(transactionInputDTO);
             }
         }
@@ -74,22 +74,22 @@ public class Model2DtoTool {
         return transactionDTO;
     }
 
-    public static ScriptKeyDTO scriptKey2ScriptKeyDTO(ScriptKey scriptKey) {
-        ScriptKeyDTO scriptKeyDTO = new ScriptKeyDTO();
-        scriptKeyDTO.addAll(scriptKey);
-        return scriptKeyDTO;
+    public static InputScriptDTO scriptKey2ScriptKeyDTO(InputScript inputScript) {
+        InputScriptDTO inputScriptDTO = new InputScriptDTO();
+        inputScriptDTO.addAll(inputScript);
+        return inputScriptDTO;
     }
 
-    public static ScriptLockDTO scriptLock2ScriptLockDTO(ScriptLock scriptLock) {
-        ScriptLockDTO scriptLockDTO = new ScriptLockDTO();
-        scriptLockDTO.addAll(scriptLock);
-        return scriptLockDTO;
+    public static OutputScriptDTO scriptLock2ScriptLockDTO(OutputScript outputScript) {
+        OutputScriptDTO outputScriptDTO = new OutputScriptDTO();
+        outputScriptDTO.addAll(outputScript);
+        return outputScriptDTO;
     }
 
     public static TransactionOutputDTO transactionOutput2TransactionOutputDTO(TransactionOutput transactionOutput) {
         TransactionOutputDTO transactionOutputDTO = new TransactionOutputDTO();
         transactionOutputDTO.setValue(transactionOutput.getValue());
-        transactionOutputDTO.setScriptLockDTO(scriptLock2ScriptLockDTO(transactionOutput.getScriptLock()));
+        transactionOutputDTO.setOutputScriptDTO(scriptLock2ScriptLockDTO(transactionOutput.getOutputScript()));
         return transactionOutputDTO;
     }
 

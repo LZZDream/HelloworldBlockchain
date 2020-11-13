@@ -13,7 +13,7 @@ public class TransactionInputDTO implements Serializable {
     //未花费输出
     private UnspendTransactionOutputDTO unspendTransactionOutputDTO;
     //脚本钥匙
-    private ScriptKeyDTO scriptKeyDTO;
+    private InputScriptDTO inputScriptDTO;
 
 
 
@@ -28,12 +28,12 @@ public class TransactionInputDTO implements Serializable {
         this.unspendTransactionOutputDTO = unspendTransactionOutputDTO;
     }
 
-    public ScriptKeyDTO getScriptKeyDTO() {
-        return scriptKeyDTO;
+    public InputScriptDTO getInputScriptDTO() {
+        return inputScriptDTO;
     }
 
-    public void setScriptKeyDTO(ScriptKeyDTO scriptKeyDTO) {
-        this.scriptKeyDTO = scriptKeyDTO;
+    public void setInputScriptDTO(InputScriptDTO inputScriptDTO) {
+        this.inputScriptDTO = inputScriptDTO;
     }
 
     //endregion
