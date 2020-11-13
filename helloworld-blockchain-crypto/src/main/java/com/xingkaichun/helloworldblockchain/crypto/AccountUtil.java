@@ -72,7 +72,7 @@ public class AccountUtil {
      */
     public static Account accountFromPrivateKey(String privateKey) {
         try {
-            privateKey = fillZeroTo64LengthPrivateKey(privateKey);
+            privateKey = formatPrivateKey(privateKey);
 
             BigInteger bigIntegerPrivateKey = privateKeyFrom(privateKey);
             byte[] ecPublicKey = publicKeyFromPrivateKey(bigIntegerPrivateKey);
@@ -191,7 +191,7 @@ public class AccountUtil {
      */
     private static String encodePrivateKey(BigInteger bigIntegerPrivateKey) {
         String hexPrivateKey = bigIntegerPrivateKey.toString(16);
-        return fillZeroTo64LengthPrivateKey(hexPrivateKey);
+        return formatPrivateKey(hexPrivateKey);
     }
 
     /**
@@ -275,9 +275,10 @@ public class AccountUtil {
     }
 
     /**
+     * 格式化私钥
      * 前置填零，返回[长度为64位][十六进制字符串形式的]私钥
      */
-    private static String fillZeroTo64LengthPrivateKey(String privateKey) {
+    private static String formatPrivateKey(String privateKey) {
         //私钥长度是256bit，64位十六进制的字符串数，如果传入的私钥长度不够，这里进行前置补充零操作。
         final int length = 64;
         if(privateKey.length()<length){
