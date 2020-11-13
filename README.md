@@ -6,14 +6,14 @@ HelloworldBlockchain开发调试简单，下载源码，导入idea(eclipse)，�
 
 ### 联系方式
 无论你心中有任何问题，都可扫二维码添加作者微信(微信号HelloworldBlockchain)
-<img alt="作者微信" width="150" height="150" src="http://139.9.125.122:8444/document/image/Wechat_HelloworldBlockchain.jpg"/>
+<img alt="作者微信" width="150" height="150" src="http://139.9.125.122:80/document/image/Wechat_HelloworldBlockchain.jpg"/>
 
 ### HelloworldBlockchain项目意义  
 探索与实践区块链技术。   
 
 ### 演示
-http://139.9.125.122:8444/index.html  
-<img alt="HellowordlBlockchain首页" src="http://139.9.125.122:8444/document/image/HelloworldBlockchainIndexPage.png"/>
+http://139.9.125.122:80/index.html  
+<img alt="HellowordlBlockchain首页" src="http://139.9.125.122:80/document/image/HelloworldBlockchainIndexPage.png"/>
 
 ### 集成开发环境搭建
 #### eclipse
@@ -39,7 +39,7 @@ helloworld-blockchain-node： 它集成了三个角色的功能。启动区块�
 * 二是作为节点管理员的角色，为用户提供管理本地节点的功能，例如增/删/改网络节点、激活/停用矿工、激活/停用同步器。
 * 三是开发调试角色，为开发人员提供了十分便利的调试功能。
 
-### 使用手册 [跳转到手册](http://139.9.125.122:8444/document/index.html)
+### 使用手册 [跳转到手册](http://139.9.125.122:80/document/index.html)
 * 获取网站管理员的初始账户
 * 登录系统
 * 账户地址是什么
@@ -73,27 +73,8 @@ cd HelloworldBlockchainNode
 运行启动脚本  
 ./start.sh restart  
 ```  
-
-### 区块链学习
-在系统学习区块链前，可以关注抖音账号xingkaichun，视频都是几分钟一个，内容是作者讲解的区块链理论与概念，不涉及到具体项目与代码。建议学习完概念之后，然后再搭建本项目，最后再学习本项目源码。  
-
 ### 系统强制升级机制
 系统每一个发布版本，都带有一个截止运行日期。该版本到期后，必须强制升级系统，系统才能正常运行。参考GlobalSetting.SystemVersionConstant.isVersionLegal。
-
-## 改变
-1.哈希(区块哈希、交易哈希、交易输出哈希)  
-    哈希约束为全局唯一，区块哈希不允许出现重复，区块哈希与交易哈希、交易输出哈希之间也不允许出现重复。  
-    哈希的格式为：普通哈希+(区块、交易)时间戳  
-2.交易输出哈希  
-   比特币采用交易哈希+交易输出的序号定位一个交易输出  
-   这里采用交易输出哈希定位一个交易输出  
-3.脚本
-  可以直接区分操作码与操作数  
-4.节点间数据交互以JSON替换二进制，并且只传输最为精简的属性，不传输可以推导出来的属性。对象的其它属性让程序自动生成。好处：格式简单，传输数据少，校验简单。  
-5.区块大小不以字节数大小为限制，采用交易个数大小为准。(每个区块的交易数量)有最大限制。  
-6.交易最低手续费不以字节数为准，采用(交易输入数量+交易输出数量)为准。每笔交易(交易输入+交易输出数量)有最大限制。每个字段都要有一个字符大小的限制。  
-优点：计算简单，可以事先计算好交易手续费。  
-老的是以字节大小计算。设计到序列化二进制，不同语言实现，需要实现相同的序列化，不够灵活。
 
 ## 进阶
 地址并不一定是由公钥产生。P2SH、P2WSH。  
