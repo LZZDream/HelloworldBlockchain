@@ -99,19 +99,9 @@ public class GlobalSetting {
     }
 
     /**
-     * 交易设置
+     * TODO 交易设置 地址的大小 其实在操作码 操作数中 就已经规定了最大值
      */
     public static class TransactionConstant{
-        //最大交易金额
-        public static final long TRANSACTION_MAX_AMOUNT = Long.MAX_VALUE;
-        //最小交易金额
-        public static final long TRANSACTION_MIN_AMOUNT = 1L;
-        //最大交易金额
-        public static final long TRANSACTION_MAX_INPUT_COUNT = 100L;
-        //最小交易金额
-        public static final long TRANSACTION_MAX_OUTPUT_COUNT = 100L;
-
-
         //交易地址最小存储容量
         public static final long TRANSACTION_TEXT_ADDRESS_MIN_SIZE = 20;
         //交易地址最大存储容量

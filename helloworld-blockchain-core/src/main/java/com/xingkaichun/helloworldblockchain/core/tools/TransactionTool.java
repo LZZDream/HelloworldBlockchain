@@ -6,7 +6,6 @@ import com.xingkaichun.helloworldblockchain.core.StackBasedVirtualMachine;
 import com.xingkaichun.helloworldblockchain.core.model.script.Script;
 import com.xingkaichun.helloworldblockchain.core.model.script.ScriptExecuteResult;
 import com.xingkaichun.helloworldblockchain.core.model.transaction.*;
-import com.xingkaichun.helloworldblockchain.util.ByteUtil;
 import com.xingkaichun.helloworldblockchain.crypto.AccountUtil;
 import com.xingkaichun.helloworldblockchain.crypto.HexUtil;
 import com.xingkaichun.helloworldblockchain.crypto.SHA256Util;
@@ -14,7 +13,7 @@ import com.xingkaichun.helloworldblockchain.netcore.transport.dto.TransactionDTO
 import com.xingkaichun.helloworldblockchain.netcore.transport.dto.TransactionInputDTO;
 import com.xingkaichun.helloworldblockchain.netcore.transport.dto.TransactionOutputDTO;
 import com.xingkaichun.helloworldblockchain.netcore.transport.dto.UnspendTransactionOutputDTO;
-import com.xingkaichun.helloworldblockchain.setting.GlobalSetting;
+import com.xingkaichun.helloworldblockchain.util.ByteUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -191,16 +190,9 @@ public class TransactionTool {
                 logger.debug("交易金额不合法：交易金额不能小于等于0");
                 return false;
             }
-            //校验交易金额最小值
-            if(transactionAmount < GlobalSetting.TransactionConstant.TRANSACTION_MIN_AMOUNT){
-                logger.debug("交易金额不合法：交易金额不能小于系统默认交易金额最小值");
-                return false;
-            }
-            //校验交易金额最大值
-            if(transactionAmount > GlobalSetting.TransactionConstant.TRANSACTION_MAX_AMOUNT){
-                logger.debug("交易金额不合法：交易金额不能大于系统默认交易金额最大值");
-                return false;
-            }
+            //交易金额最小值不需要校验，假设值不正确，业务逻辑通过不了。
+
+            //交易金额最大值不需要校验，假设值不正确，业务逻辑通过不了
             return true;
         } catch (Exception e) {
             logger.debug("校验金额方法出现异常，请检查。",e);

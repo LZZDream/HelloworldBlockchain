@@ -281,16 +281,6 @@ public class StructureSizeTool {
             }
             return true;
         }else if(TransactionType.NORMAL == transactionType){
-            List<TransactionInput> inputs = transaction.getInputs();
-            if(inputs != null && inputs.size() > GlobalSetting.TransactionConstant.TRANSACTION_MAX_INPUT_COUNT){
-                logger.debug("交易数据异常：普通交易的交易输入数量超过限制。");
-                return false;
-            }
-            List<TransactionOutput> outputs = transaction.getOutputs();
-            if(outputs == null || outputs.size() > GlobalSetting.TransactionConstant.TRANSACTION_MAX_OUTPUT_COUNT){
-                logger.debug("交易数据异常：普通交易的交易输出数量超过限制。");
-                return false;
-            }
             return true;
         }else {
             logger.debug("交易数据异常：不能识别的交易的类型。");
