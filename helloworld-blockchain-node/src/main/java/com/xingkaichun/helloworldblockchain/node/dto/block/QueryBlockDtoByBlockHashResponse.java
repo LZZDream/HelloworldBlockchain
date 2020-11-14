@@ -43,8 +43,6 @@ public class QueryBlockDtoByBlockHashResponse {
         private String nextBlockHash;
         private String merkleTreeRoot;
 
-        private List<TransactionDto> transactionDtoList;
-
         public long getHeight() {
             return height;
         }
@@ -141,13 +139,6 @@ public class QueryBlockDtoByBlockHashResponse {
             this.merkleTreeRoot = merkleTreeRoot;
         }
 
-        public List<TransactionDto> getTransactionDtoList() {
-            return transactionDtoList;
-        }
-
-        public void setTransactionDtoList(List<TransactionDto> transactionDtoList) {
-            this.transactionDtoList = transactionDtoList;
-        }
     }
 
 

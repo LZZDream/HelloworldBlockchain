@@ -119,7 +119,10 @@ public class BlockchainBrowserServiceImpl implements BlockchainBrowserService {
     @Override
     public List<com.xingkaichun.helloworldblockchain.node.dto.transaction.TransactionView> queryTransactionListByBlockHashTransactionHeight(String blockHash, long from, long size) {
         Block block = getBlockchainCore().queryBlockByBlockHash(blockHash);
-        long fromUpdate = block.getStartTransactionIndexInBlockchain() + from;
+        long fromUpdate = block.getStartTransactionIndexInBlockchain() + from -1 ;
+        if(from+size-1 > block.getTransactions().size()){
+            size = block.getTransactions().size() - from + 1;
+        }
         List<Transaction> transactionList = getBlockchainCore().queryTransactionListByTransactionHeight(fromUpdate,size);
         List<com.xingkaichun.helloworldblockchain.node.dto.transaction.TransactionView> transactionViewList = new ArrayList<>();
         for(Transaction transaction:transactionList){
