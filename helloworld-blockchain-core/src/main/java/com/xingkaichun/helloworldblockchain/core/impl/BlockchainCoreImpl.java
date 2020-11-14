@@ -184,7 +184,7 @@ public class BlockchainCoreImpl extends BlockchainCore {
                 TransactionOutputDTO transactionOutputDTO = new TransactionOutputDTO();
                 transactionOutputDTO.setValue(recipient.getValue());
                 OutputScript outputScript = StackBasedVirtualMachine.createPayToPublicKeyHashOutputScript(recipient.getAddress());
-                transactionOutputDTO.setOutputScriptDTO(Model2DtoTool.scriptLock2ScriptLockDTO(outputScript));
+                transactionOutputDTO.setOutputScriptDTO(Model2DtoTool.outputScript2OutputScriptDTO(outputScript));
                 transactionOutputDtoList.add(transactionOutputDTO);
             }
         }
@@ -247,7 +247,7 @@ public class BlockchainCoreImpl extends BlockchainCore {
             TransactionOutputDTO transactionOutputDTO = new TransactionOutputDTO();
             transactionOutputDTO.setValue(change);
             OutputScript outputScript = StackBasedVirtualMachine.createPayToPublicKeyHashOutputScript(payerChangeAddress);
-            transactionOutputDTO.setOutputScriptDTO(Model2DtoTool.scriptLock2ScriptLockDTO(outputScript));
+            transactionOutputDTO.setOutputScriptDTO(Model2DtoTool.outputScript2OutputScriptDTO(outputScript));
             transactionDTO.getTransactionOutputDtoList().add(transactionOutputDTO);
         }
 
@@ -258,7 +258,7 @@ public class BlockchainCoreImpl extends BlockchainCore {
             TransactionInputDTO transactionInputDTO = transactionInputDtoList.get(i);
             String signature = Model2DtoTool.signature(transactionDTO,privateKey);
             InputScript inputScript = StackBasedVirtualMachine.createPayToPublicKeyHashInputScript(signature, publicKey);
-            transactionInputDTO.setInputScriptDTO(Model2DtoTool.scriptKey2ScriptKeyDTO(inputScript));
+            transactionInputDTO.setInputScriptDTO(Model2DtoTool.inputScript2InputScriptDTO(inputScript));
         }
 
 

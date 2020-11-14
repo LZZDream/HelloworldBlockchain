@@ -54,7 +54,7 @@ public class Model2DtoTool {
 
                 TransactionInputDTO transactionInputDTO = new TransactionInputDTO();
                 transactionInputDTO.setUnspendTransactionOutputDTO(unspendTransactionOutputDto);
-                transactionInputDTO.setInputScriptDTO(scriptKey2ScriptKeyDTO(transactionInput.getInputScript()));
+                transactionInputDTO.setInputScriptDTO(inputScript2InputScriptDTO(transactionInput.getInputScript()));
                 inputs.add(transactionInputDTO);
             }
         }
@@ -74,13 +74,13 @@ public class Model2DtoTool {
         return transactionDTO;
     }
 
-    public static InputScriptDTO scriptKey2ScriptKeyDTO(InputScript inputScript) {
+    public static InputScriptDTO inputScript2InputScriptDTO(InputScript inputScript) {
         InputScriptDTO inputScriptDTO = new InputScriptDTO();
         inputScriptDTO.addAll(inputScript);
         return inputScriptDTO;
     }
 
-    public static OutputScriptDTO scriptLock2ScriptLockDTO(OutputScript outputScript) {
+    public static OutputScriptDTO outputScript2OutputScriptDTO(OutputScript outputScript) {
         OutputScriptDTO outputScriptDTO = new OutputScriptDTO();
         outputScriptDTO.addAll(outputScript);
         return outputScriptDTO;
@@ -89,7 +89,7 @@ public class Model2DtoTool {
     public static TransactionOutputDTO transactionOutput2TransactionOutputDTO(TransactionOutput transactionOutput) {
         TransactionOutputDTO transactionOutputDTO = new TransactionOutputDTO();
         transactionOutputDTO.setValue(transactionOutput.getValue());
-        transactionOutputDTO.setOutputScriptDTO(scriptLock2ScriptLockDTO(transactionOutput.getOutputScript()));
+        transactionOutputDTO.setOutputScriptDTO(outputScript2OutputScriptDTO(transactionOutput.getOutputScript()));
         return transactionOutputDTO;
     }
 

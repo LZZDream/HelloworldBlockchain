@@ -73,7 +73,7 @@ public class Dto2ModelTool {
                 }
                 TransactionInput transactionInput = new TransactionInput();
                 transactionInput.setUnspendTransactionOutput(TransactionTool.transactionOutput2UnspendTransactionOutput(unspendTransactionOutput));
-                transactionInput.setInputScript(scriptKeyDto2ScriptKey(transactionInputDTO.getInputScriptDTO()));
+                transactionInput.setInputScript(inputScriptDto2InputScript(transactionInputDTO.getInputScriptDTO()));
                 inputs.add(transactionInput);
             }
         }
@@ -102,7 +102,7 @@ public class Dto2ModelTool {
         String address = AccountUtil.addressFromPublicKeyHash(publicKeyHash);
         transactionOutput.setAddress(address);
         transactionOutput.setValue(transactionOutputDTO.getValue());
-        transactionOutput.setOutputScript(scriptLockDto2ScriptLock(transactionOutputDTO.getOutputScriptDTO()));
+        transactionOutput.setOutputScript(outputScriptDto2OutputScript(transactionOutputDTO.getOutputScriptDTO()));
         return transactionOutput;
     }
 
@@ -113,7 +113,7 @@ public class Dto2ModelTool {
         return TransactionType.NORMAL;
     }
 
-    private static OutputScript scriptLockDto2ScriptLock(OutputScriptDTO outputScriptDTO) {
+    private static OutputScript outputScriptDto2OutputScript(OutputScriptDTO outputScriptDTO) {
         if(outputScriptDTO == null){
             return null;
         }
@@ -122,7 +122,7 @@ public class Dto2ModelTool {
         return outputScript;
     }
 
-    private static InputScript scriptKeyDto2ScriptKey(InputScriptDTO inputScriptDTO) {
+    private static InputScript inputScriptDto2InputScript(InputScriptDTO inputScriptDTO) {
         if(inputScriptDTO == null){
             return null;
         }

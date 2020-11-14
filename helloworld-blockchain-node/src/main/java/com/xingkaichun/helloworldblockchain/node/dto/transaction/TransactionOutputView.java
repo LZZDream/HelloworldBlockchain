@@ -3,7 +3,7 @@ package com.xingkaichun.helloworldblockchain.node.dto.transaction;
 public class TransactionOutputView {
     private String address;
     private long value;
-    private String scriptLock;
+    private String outputScript;
     private String transactionHash;
     private long transactionOutputIndex;
 
@@ -23,12 +23,12 @@ public class TransactionOutputView {
         this.value = value;
     }
 
-    public String getScriptLock() {
-        return scriptLock;
+    public String getOutputScript() {
+        return outputScript;
     }
 
-    public void setScriptLock(String scriptLock) {
-        this.scriptLock = scriptLock;
+    public void setOutputScript(String outputScript) {
+        this.outputScript = outputScript;
     }
 
     public String getTransactionHash() {

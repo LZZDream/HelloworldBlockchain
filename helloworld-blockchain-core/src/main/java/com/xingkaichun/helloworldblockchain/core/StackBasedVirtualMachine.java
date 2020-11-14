@@ -84,7 +84,7 @@ public class StackBasedVirtualMachine {
         return script;
     }
 
-    public static String getPublicKeyHashByPayToPublicKeyHashOutputScript(List<String> scriptLock) {
-        return scriptLock.get(3);
+    public static String getPublicKeyHashByPayToPublicKeyHashOutputScript(List<String> outputScript) {
+        return outputScript.get(3);
     }
 }

@@ -18,8 +18,8 @@ public class TransactionView {
     private List<TransactionInputView> transactionInputViewList;
     private List<TransactionOutputView> transactionOutputViewList;
 
-    private List<String> scriptKeyList;
-    private List<String> scriptLockList;
+    private List<String> inputScriptList;
+    private List<String> outputScriptList;
 
 
     public String getTransactionHash() {
@@ -118,20 +118,20 @@ public class TransactionView {
         this.transactionOutputViewList = transactionOutputViewList;
     }
 
-    public List<String> getScriptKeyList() {
-        return scriptKeyList;
+    public List<String> getInputScriptList() {
+        return inputScriptList;
     }
 
-    public void setScriptKeyList(List<String> scriptKeyList) {
-        this.scriptKeyList = scriptKeyList;
+    public void setInputScriptList(List<String> inputScriptList) {
+        this.inputScriptList = inputScriptList;
     }
 
-    public List<String> getScriptLockList() {
-        return scriptLockList;
+    public List<String> getOutputScriptList() {
+        return outputScriptList;
     }
 
-    public void setScriptLockList(List<String> scriptLockList) {
-        this.scriptLockList = scriptLockList;
+    public void setOutputScriptList(List<String> outputScriptList) {
+        this.outputScriptList = outputScriptList;
     }
 
 }

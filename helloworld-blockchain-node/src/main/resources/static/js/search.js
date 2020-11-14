@@ -205,7 +205,7 @@ function txosByAddress(result){
             temp += '<dl><dd>transactionOutputHash: ' + result.txos[i].transactionOutputHash + '</dd>' +
                     '<dd>stringAddress: ' + result.txos[i].address + '</dd>' +
                     '<dd>value: ' + result.txos[i].value + '</dd>' +
-                    '<dd>scriptLock: ' + JSON.stringify(result.txos[i].scriptLock)+ '</dd>' +
+                    '<dd>outputScript: ' + JSON.stringify(result.txos[i].outputScript)+ '</dd>' +
                     '<dd>blockHeight: ' + result.txos[i].blockHeight + '</dd>' +
                     '<dd>transactionIndexInBlock: ' + result.txos[i].transactionIndexInBlock + '</dd>' +
                     '<dd>transactionOutputIndex: ' + result.txos[i].transactionOutputIndex + '</dd></dl>';
@@ -221,7 +221,7 @@ function utxosByAddress(result){
             temp += '<dl><dd>transactionOutputHash: ' + result.utxos[i].transactionOutputHash + '</dd>' +
                     '<dd>stringAddress: ' + result.utxos[i].address + '</dd>' +
                     '<dd>value: ' + result.utxos[i].value + '</dd>' +
-                    '<dd>scriptLock: ' + JSON.stringify(result.utxos[i].scriptLock)+ '</dd>' +
+                    '<dd>outputScript: ' + JSON.stringify(result.utxos[i].outputScript)+ '</dd>' +
                     '<dd>blockHeight: ' + result.utxos[i].blockHeight + '</dd>' +
                     '<dd>transactionIndexInBlock: ' + result.utxos[i].transactionIndexInBlock + '</dd>' +
                     '<dd>transactionOutputIndex: ' + result.utxos[i].transactionOutputIndex + '</dd></dl>';
@@ -241,7 +241,7 @@ function transByUuid(result){
 		var char = "";
 		for (var i=0; i<result.transactionDTO.inputs.length; i++) {
 			char += '<dl class="child"><dd>unspendTransactionOutputHash: ' + result.transactionDTO.inputs[i].unspendTransactionOutputHash + '</dd>' +
-                    '<dd>scriptKey: ' + JSON.stringify(result.transactionDTO.inputs[i].scriptKey)+ '</dd></dl>';
+                    '<dd>inputScript: ' + JSON.stringify(result.transactionDTO.inputs[i].inputScript)+ '</dd></dl>';
 		}
 		return char;
 	}
@@ -251,7 +251,7 @@ function transByUuid(result){
 			char += '<dl class="child"><dd>transactionOutputHash: ' + result.transactionDTO.outputs[i].transactionOutputHash + '</dd>' +
 					'<dd>address: ' + result.transactionDTO.outputs[i].value + '</dd>' +
 					'<dd>value: ' + result.transactionDTO.outputs[i].value + '</dd>' +
-					'<dd>value: ' + result.transactionDTO.outputs[i].scriptLock + '</dd></dl>';
+					'<dd>value: ' + result.transactionDTO.outputs[i].outputScript + '</dd></dl>';
 		}
 		return char;
 	}
@@ -342,8 +342,8 @@ function tempTransList(result){
 							'<dd>blockHeight: ' + result.transactionList[j].inputs[i].unspendTransactionOutput.blockHeight + '</dd>' +
 							'<dd>transactionIndexInBlock: ' + result.transactionList[j].inputs[i].unspendTransactionOutput.transactionIndexInBlock + '</dd>' +
 							'<dd>transactionOutputIndex: ' + result.transactionList[j].inputs[i].unspendTransactionOutput.transactionOutputIndex + '</dd>' +
-							'<dd>scriptLock: ' + JSON.stringify(result.transactionList[j].inputs[i].unspendTransactionOutput.scriptLock)+ '</dd>' +
-							'<dd>scriptKey: ' + JSON.stringify(result.transactionList[j].inputs[i].scriptKey)+ '</dd></dl>';
+							'<dd>outputScript: ' + JSON.stringify(result.transactionList[j].inputs[i].unspendTransactionOutput.outputScript)+ '</dd>' +
+							'<dd>inputScript: ' + JSON.stringify(result.transactionList[j].inputs[i].inputScript)+ '</dd></dl>';
 				}
 			} else{
 				char = null;
@@ -357,7 +357,7 @@ function tempTransList(result){
 					char += '<dl class="child"><dd>transactionOutputHash: ' + result.transactionList[j].outputs[i].transactionOutputHash + '</dd>' +
 							'<dd>stringAddress: ' + result.transactionList[j].outputs[i].address + '</dd>' +
 							'<dd>value: ' + result.transactionList[j].outputs[i].value + '</dd>' +
-							'<dd>scriptLock: ' + JSON.stringify(result.transactionList[j].outputs[i].scriptLock) + '</dd>' +
+							'<dd>outputScript: ' + JSON.stringify(result.transactionList[j].outputs[i].outputScript) + '</dd>' +
 							'<dd>blockHeight: ' + result.transactionList[j].outputs[i].blockHeight + '</dd>' +
 							'<dd>transactionIndexInBlock: ' + result.transactionList[j].outputs[i].transactionIndexInBlock + '</dd>' +
 							'<dd>transactionOutputIndex: ' + result.transactionList[j].outputs[i].transactionOutputIndex + '</dd></dl>';

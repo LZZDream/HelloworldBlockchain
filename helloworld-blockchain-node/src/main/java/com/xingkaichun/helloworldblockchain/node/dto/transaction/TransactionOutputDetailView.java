@@ -7,8 +7,8 @@ public class TransactionOutputDetailView {
     private long transactionOutputIndex;
     private long value;
     private boolean isSpend;
-    private String scriptLock;
-    private String scriptKey;
+    private String outputScript;
+    private String inputScript;
 
     private TransactionView inputTransaction;
     private TransactionView outputTransaction;
@@ -37,12 +37,12 @@ public class TransactionOutputDetailView {
         this.value = value;
     }
 
-    public String getScriptLock() {
-        return scriptLock;
+    public String getOutputScript() {
+        return outputScript;
     }
 
-    public void setScriptLock(String scriptLock) {
-        this.scriptLock = scriptLock;
+    public void setOutputScript(String outputScript) {
+        this.outputScript = outputScript;
     }
 
     public long getBlockHeight() {
@@ -61,12 +61,12 @@ public class TransactionOutputDetailView {
         this.transactionHash = transactionHash;
     }
 
-    public String getScriptKey() {
-        return scriptKey;
+    public String getInputScript() {
+        return inputScript;
     }
 
-    public void setScriptKey(String scriptKey) {
-        this.scriptKey = scriptKey;
+    public void setInputScript(String inputScript) {
+        this.inputScript = inputScript;
     }
 
     public long getTransactionOutputIndex() {

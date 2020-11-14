@@ -152,9 +152,9 @@ public class TransactionTool {
         if(outputs != null){
             for(TransactionOutputDTO transactionOutputDTO:outputs){
                 byte[] bytesValue = ByteUtil.longToBytes8(transactionOutputDTO.getValue());
-                byte[] bytesScriptLock = ScriptTool.bytesScript(transactionOutputDTO.getOutputScriptDTO());
+                byte[] bytesOutputScript = ScriptTool.bytesScript(transactionOutputDTO.getOutputScriptDTO());
                 byte[] bytesTransactionOutput = Bytes.concat(ByteUtil.concatLengthBytes(bytesValue),
-                        ByteUtil.concatLengthBytes(bytesScriptLock));
+                        ByteUtil.concatLengthBytes(bytesOutputScript));
                 bytesTransactionOutputList.add(bytesTransactionOutput);
             }
         }

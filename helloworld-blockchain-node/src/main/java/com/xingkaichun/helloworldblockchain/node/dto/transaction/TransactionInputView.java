@@ -4,7 +4,7 @@ public class TransactionInputView {
 
     private String address;
     private long value;
-    private String scriptKey;
+    private String inputScript;
     private String transactionHash;
     private long transactionOutputIndex;
 
@@ -24,12 +24,12 @@ public class TransactionInputView {
         this.value = value;
     }
 
-    public String getScriptKey() {
-        return scriptKey;
+    public String getInputScript() {
+        return inputScript;
     }
 
-    public void setScriptKey(String scriptKey) {
-        this.scriptKey = scriptKey;
+    public void setInputScript(String inputScript) {
+        this.inputScript = inputScript;
     }
 
     public String getTransactionHash() {
