@@ -267,6 +267,7 @@
             blockAbstract_inner.innerHTML = txt;
         });
 
+
         var settings = {
             "url": "/Api/Blockchain/QueryTransactionListByBlockHashTransactionHeight",
             "method": "post",
@@ -390,10 +391,8 @@
                     </div>`
             }
             panel.innerHTML = txt + `<div class="page-nav">
-                                                                                        
-                                                        
-                                                                                        <ul id="page-pagination" class="pagination-sm pagination"><li class="first disabled"><a href="?page=1&amp;order_by=tx_block_idx&amp;asc=1">&lt;&lt;</a></li><li class="prev disabled"><a href="?page=1&amp;order_by=tx_block_idx&amp;asc=1">&lt;</a></li><li class="page active"><a href="?page=1&amp;order_by=tx_block_idx&amp;asc=1">1</a></li><li class="next"><a href="?page=2&amp;order_by=tx_block_idx&amp;asc=1">&gt;</a></li><li class="last"><a href="?page=81&amp;order_by=tx_block_idx&amp;asc=1">&gt;&gt;</a></li></ul>
-                                                                                    </div>`
+                                        <ul id="page-pagination" class="pagination-sm pagination"><li class="first disabled"><a href="?page=1&amp;order_by=tx_block_idx&amp;asc=1">&lt;&lt;</a></li><li class="prev disabled"><a href="?page=1&amp;order_by=tx_block_idx&amp;asc=1">&lt;</a></li><li class="page active"><a href="?page=1&amp;order_by=tx_block_idx&amp;asc=1">1</a></li><li class="next"><a href="?page=2&amp;order_by=tx_block_idx&amp;asc=1">&gt;</a></li><li class="last"><a href="?page=81&amp;order_by=tx_block_idx&amp;asc=1">&gt;&gt;</a></li></ul>
+                                     </div>`
         });
     </script>
 </body>
