@@ -2,7 +2,7 @@
 
 <configuration>
 
-    <property name="APP_Name" value="blockchain-node"/>
+    <property name="APP_Name" value="helloworld-blockchain-node"/>
     <property name="LOG_HOME" value="logs/"/>
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
 
