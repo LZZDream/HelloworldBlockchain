@@ -103,30 +103,30 @@ public class BlockchainBrowserServiceImpl implements BlockchainBrowserService {
     }
 
     @Override
-    public List<com.xingkaichun.helloworldblockchain.node.dto.transaction.TransactionView> queryTransactionListByAddress(String address, long from, long size) {
+    public List<TransactionView> queryTransactionListByAddress(String address, long from, long size) {
         List<Transaction> transactionList = getBlockchainCore().queryTransactionListByAddress(address,from,size);
         if(transactionList == null){
             return null;
         }
-        List<com.xingkaichun.helloworldblockchain.node.dto.transaction.TransactionView> transactionViewList = new ArrayList<>();
+        List<TransactionView> transactionViewList = new ArrayList<>();
         for(Transaction transaction:transactionList){
-            com.xingkaichun.helloworldblockchain.node.dto.transaction.TransactionView transactionView = queryTransactionByTransactionHash(transaction.getTransactionHash());
+            TransactionView transactionView = queryTransactionByTransactionHash(transaction.getTransactionHash());
             transactionViewList.add(transactionView);
         }
         return transactionViewList;
     }
 
     @Override
-    public List<com.xingkaichun.helloworldblockchain.node.dto.transaction.TransactionView> queryTransactionListByBlockHashTransactionHeight(String blockHash, long from, long size) {
+    public List<TransactionView> queryTransactionListByBlockHashTransactionHeight(String blockHash, long from, long size) {
         Block block = getBlockchainCore().queryBlockByBlockHash(blockHash);
         long fromUpdate = block.getStartTransactionIndexInBlockchain() + from -1 ;
         if(from+size-1 > block.getTransactions().size()){
             size = block.getTransactions().size() - from + 1;
         }
         List<Transaction> transactionList = getBlockchainCore().queryTransactionListByTransactionHeight(fromUpdate,size);
-        List<com.xingkaichun.helloworldblockchain.node.dto.transaction.TransactionView> transactionViewList = new ArrayList<>();
+        List<TransactionView> transactionViewList = new ArrayList<>();
         for(Transaction transaction:transactionList){
-            com.xingkaichun.helloworldblockchain.node.dto.transaction.TransactionView transactionView = queryTransactionByTransactionHash(transaction.getTransactionHash());
+            TransactionView transactionView = queryTransactionByTransactionHash(transaction.getTransactionHash());
             transactionViewList.add(transactionView);
         }
         return transactionViewList;
@@ -135,14 +135,14 @@ public class BlockchainBrowserServiceImpl implements BlockchainBrowserService {
 
 
     @Override
-    public com.xingkaichun.helloworldblockchain.node.dto.transaction.TransactionView queryTransactionByTransactionHash(String transactionHash) {
+    public TransactionView queryTransactionByTransactionHash(String transactionHash) {
         Transaction transaction = getBlockchainCore().queryTransactionByTransactionHash(transactionHash);
         if(transaction == null){
             return null;
         }
         long blockchainHeight = getBlockchainCore().queryBlockchainHeight();
         Block block = getBlockchainCore().queryBlockByBlockHeight(transaction.getBlockHeight());
-        com.xingkaichun.helloworldblockchain.node.dto.transaction.TransactionView transactionView = new com.xingkaichun.helloworldblockchain.node.dto.transaction.TransactionView();
+        TransactionView transactionView = new TransactionView();
 
         transactionView.setTransactionHash(transaction.getTransactionHash());
         transactionView.setBlockHeight(transaction.getBlockHeight());

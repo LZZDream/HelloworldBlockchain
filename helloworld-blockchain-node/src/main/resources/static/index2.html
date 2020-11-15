@@ -267,15 +267,16 @@
             blockAbstract_inner.innerHTML = txt;
         });
 
-
+        var reqJson = '{ "blockHash": "'+ txt1[1] +'", "pageCondition": { "from": 1, "size": 10 } }';
         var settings = {
             "url": "/Api/Blockchain/QueryTransactionListByBlockHashTransactionHeight",
             "method": "post",
+            "async": false,
             "timeout": 0,
             "headers": {
                 "Content-Type": "application/json"
             },
-            "data": JSON.stringify({ "blockHash": "000000796db256ddd3598e02e68239ee5f7e5e01a1a54fafd7c77ad41914db24", "pageCondition": { "from": 1, "size": 10 } }),
+            "data": reqJson,
         };
 
         let panel = document.querySelector("body > div > div:nth-child(3) > div > div.panel-body")
@@ -296,7 +297,7 @@
                                     </td>
                                     <td>
                                         <span class="tx-item-summary-timestamp">${re.transactionType}</span>
-                                        <span class="tx-item-summary-timestamp">${re.transactionFee} BTC</span>
+                                        <span class="tx-item-summary-timestamp">${re.transactionFee} HelloworldCoin</span>
                                         <span class="tx-item-summary-timestamp -btc-time-localization"
                                             data-btccom-timestamp="1604234829" data-toggle="tooltip" title=""
                                             data-original-title="UTC: 2020-11-01 12:47:09">${re.blockTime}</span>
@@ -312,7 +313,7 @@
                                                     ${re.transactionOutputViewList[0].address}</a>
                                                 <a href="#"
                                                     class="txio-amount" ga-type="transaction">
-                                                    ${re.transactionOutputViewList[0].value}<span class="text-muted">8240</span>
+                                                    <span class="text-muted">${re.transactionOutputViewList[0].value}</span>
                                                 </a>
                                             </li>
                                             <li>
@@ -321,7 +322,7 @@
                                                     ${re.transactionOutputViewList[0].address}</a>
                                                 <a href="#"
                                                     class="txio-amount" ga-type="transaction">
-                                                    ${re.transactionOutputViewList[0].value}<span class="text-muted">8240</span>
+                                                    <span class="text-muted">${re.transactionOutputViewList[0].value}</span>
                                                 </a>
                                             </li>
                                         </ul>
@@ -337,7 +338,7 @@
                                                 </a>
                                                 <a href="#"
                                                     class="txio-amount" ga-type="transaction">
-                                                    0.0018<span class="text-muted">${re.transactionOutputViewList[0].transactionOutputIndex}</span>
+                                                    <span class="text-muted">${re.transactionOutputViewList[0].value}</span>
                                                 </a>
                                             </li>
                                             <li>
@@ -347,7 +348,7 @@
                                                 </a>
                                                 <a href="#"
                                                     class="txio-amount" ga-type="transaction">
-                                                    0.0018<span class="text-muted">${re.transactionOutputViewList[0].transactionOutputIndex}</span>
+                                                    <span class="text-muted">${re.transactionOutputViewList[0].value}</span>
                                                 </a>
                                             </li>
                                             <li>
@@ -357,7 +358,7 @@
                                                 </a>
                                                 <a href="#"
                                                     class="txio-amount" ga-type="transaction">
-                                                    0.0018<span class="text-muted">${re.transactionOutputViewList[0].transactionOutputIndex}</span>
+                                                    <span class="text-muted">${re.transactionOutputViewList[0].value}</span>
                                                 </a>
                                             </li>
                                         </ul>
@@ -376,13 +377,13 @@
                                 <tr class="tx-item-footer">
                                     <td class="tx-item-footer-note">
                                         <span class="tx-item-footer-additional-box" style="    float: right;">
-                                            0.38748240
+                                            ${re.transactionInputValues}
                                         </span>
                                         </td>
                                     <td class="tx-item-footer-additional">
 
                                         <span class="tx-item-footer-additional-box">
-                                            0.38748240
+                                            ${re.transactionOutputValues}
                                         </span>
                                     </td>
                                 </tr>
