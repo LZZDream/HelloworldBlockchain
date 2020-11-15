@@ -24,7 +24,7 @@ p,dd{
 }
 a{
     text-decoration: none;
-    color: #333;
+    color: #fff;
 }
 li,dd{
     list-style: none;
@@ -168,6 +168,13 @@ a.c_btn_imp:visited{
 	overflow: hidden;
 }
 .nav h1{
+	color: #FFFFFF;
+	line-height: 54px;
+	font-size: 16px;
+	float: left;
+	font-weight: 300;
+}
+.nav h1 a{
 	color: #FFFFFF;
 	line-height: 54px;
 	font-size: 16px;
