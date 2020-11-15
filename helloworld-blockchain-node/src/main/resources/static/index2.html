@@ -190,14 +190,17 @@
         let txt1 = location.search.substr(0).split('=')
         document.querySelector("body > div > div:nth-child(1) > ol > li").innerHTML = txt1[1];
         let blockAbstract_inner = document.querySelector('.blockAbstract-inner')
+        var reqJson = '{"blockHash":"'+ txt1[1] + '"}';
         var settings = {
             "url": "/Api/Blockchain/QueryBlockDtoByBlockHash",
             "method": "post",
             "timeout": 0,
+            "dataType": "json",
+            "async": false,
             "headers": {
                 "Content-Type": "application/json"
             },
-            "data": JSON.stringify({ "blockHash": "000000796db256ddd3598e02e68239ee5f7e5e01a1a54fafd7c77ad41914db24" }),
+            "data": reqJson,
         };
 
         $.ajax(settings).done(function (response) {
