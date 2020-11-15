@@ -302,70 +302,72 @@
                                             data-btccom-timestamp="1604234829" data-toggle="tooltip" title=""
                                             data-original-title="UTC: 2020-11-01 12:47:09">${re.blockTime}</span>
                                     </td>
-                                </tr>
+                                </tr> `;
 
-                                <tr class="txio">
+                txt+= `        <tr class="txio">
                                     <td>
-                                        <ul>
-                                            <li>
+                                        <ul>`;
+
+                //txt+= `                      <li>
+                //                                <a href="#"
+                //                                    class="txio-address" ga-type="address" ga-target="from block">
+                //                                    ${re.transactionOutputViewList[0].address}</a>
+                //                                <a href="#"
+                //                                    class="txio-amount" ga-type="transaction">
+                //                                    <span class="text-muted">${re.transactionOutputViewList[0].value}</span>
+                //                                </a>
+                //                            </li>`;
+                                            if(re.transactionInputViewList != null){
+                                            for (let i2 = 0; i2 < re.transactionInputViewList.length; i2++) {
+                txt+= `                      <li>
                                                 <a href="#"
                                                     class="txio-address" ga-type="address" ga-target="from block">
-                                                    ${re.transactionOutputViewList[0].address}</a>
+                                                    ${re.transactionInputViewList[i2].address}</a>
                                                 <a href="#"
                                                     class="txio-amount" ga-type="transaction">
-                                                    <span class="text-muted">${re.transactionOutputViewList[0].value}</span>
+                                                    <span class="text-muted">${re.transactionInputViewList[i2].value}</span>
                                                 </a>
-                                            </li>
-                                            <li>
-                                                <a href="#"
-                                                    class="txio-address" ga-type="address" ga-target="from block">
-                                                    ${re.transactionOutputViewList[0].address}</a>
-                                                <a href="#"
-                                                    class="txio-amount" ga-type="transaction">
-                                                    <span class="text-muted">${re.transactionOutputViewList[0].value}</span>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                            </li>`;
+                                            }
+                                            }
+
+                txt+= `                  </ul>
                                     </td>
                                     <td>
                                         <i
                                             class="glyphicon glyphicon-chevron-right txio-arrow txio-address-coinbasecome"></i>
-                                        <ul>
-                                            <li>
-                                                <a href="#"
-                                                    class="txio-address" ga-type="address">
-                                                    ${re.transactionOutputViewList[0].address}
-                                                </a>
-                                                <a href="#"
-                                                    class="txio-amount" ga-type="transaction">
-                                                    <span class="text-muted">${re.transactionOutputViewList[0].value}</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#"
-                                                    class="txio-address" ga-type="address">
-                                                    ${re.transactionOutputViewList[0].address}
-                                                </a>
-                                                <a href="#"
-                                                    class="txio-amount" ga-type="transaction">
-                                                    <span class="text-muted">${re.transactionOutputViewList[0].value}</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#"
-                                                    class="txio-address" ga-type="address">
-                                                    ${re.transactionOutputViewList[0].address}
-                                                </a>
-                                                <a href="#"
-                                                    class="txio-amount" ga-type="transaction">
-                                                    <span class="text-muted">${re.transactionOutputViewList[0].value}</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
+                                        <ul>`;
 
-                                <tr class="tx-item-footer">
+                //txt+= `                      <li>
+                //                                <a href="#"
+                //                                    class="txio-address" ga-type="address">
+                //                                    ${re.transactionOutputViewList[0].address}
+                //                                </a>
+                //                                <a href="#"
+                //                                    class="txio-amount" ga-type="transaction">
+                //                                    <span class="text-muted">${re.transactionOutputViewList[0].value}</span>
+                //                                </a>
+                //                            </li>`;
+
+                                            if(re.transactionOutputViewList != null){
+                                            for (let i2 = 0; i2 < re.transactionOutputViewList.length; i2++) {
+                txt+= `                      <li>
+                                                <a href="#"
+                                                    class="txio-address" ga-type="address" ga-target="from block">
+                                                    ${re.transactionOutputViewList[i2].address}</a>
+                                                <a href="#"
+                                                    class="txio-amount" ga-type="transaction">
+                                                    <span class="text-muted">${re.transactionOutputViewList[i2].value}</span>
+                                                </a>
+                                            </li>`;
+                                            }
+                                            }
+
+                 txt+= `                 </ul>
+                                    </td>
+                                </tr> `;
+
+                txt+= `         <tr class="tx-item-footer">
                                     <td class="tx-item-footer-note">
                                         <p class="tx-item-footer-note-inner">
                                         </p>
