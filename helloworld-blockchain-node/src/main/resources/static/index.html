@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>区块浏览器</title>
+    <style>
+        *{
+    margin: 0;
+    padding: 0;
+    font-family: "Microsoft YaHei", Arial;
+    font-size: 14px;
+    color: #333;
+}
+body{
+	background: #e6e9ee;
+}
+div{
+    box-sizing: border-box;
+}
+h1{
+    font-size: 20px;
+}
+h5{
+    font-size: 16px;
+}
+p,dd{
+	word-break: break-all;
+	font-size: 14px;
+}
+a{
+    text-decoration: none;
+    color: #333;
+}
+li,dd{
+    list-style: none;
+}
+button:focus {outline:none;}
+.btn{
+    background: #2d60e0;
+    color: #fff;
+    border:none;
+    cursor: pointer;
+}
+.btn:hover{
+    background: #2d60e0;
+}
+.btn_important{
+    height: 34px;
+    background: #3568e9;
+    color: #fff;
+    text-align: center;
+    line-height: 34px;
+    border-radius: 5px;
+    padding: 0 20px;
+    border: 0;
+    cursor: pointer;
+}
+.btn_important:hover{
+    background: #2d60e0;
+    color: #fff;
+}
+.btn_important:visited{
+    color: #fff;
+}
+.btn_normal{
+    height: 34px;
+    background: #fff;
+    text-align: center;
+    border: 1px solid #ccc;
+    line-height: 34px;
+    border-radius: 5px;
+    padding: 0 20px;
+    cursor: pointer;
+}
+.btn_normal:hover{
+    background: #f5f5f5;
+}
+.txt{
+    border:1px solid #ddd;
+    padding-left:20px;
+    color: #666;
+    box-sizing: border-box;
+}
+.nav_logo{
+    margin: 0 20px;
+    line-height: 50px;
+}
+.nav_logo img{
+    height: 30px;
+    vertical-align: -8px;
+    margin-right: 3px;
+}
+.nav_logo h1{
+    color: #fb6b25;
+    display: inline-block;
+}
+#divDemo{
+    width: 100%;
+}
+#divDemo .w-e-toolbar{
+    display: block;
+    overflow: hidden;
+}
+#divDemo>div>div{
+    float: left;
+}
+.c_txt{
+    border:1px solid #eee;
+	width: 350px;
+    height: 35px;
+    line-height: 35px;
+    padding-left: 10px;
+    border-radius: 3px;
+    color: #666;
+	outline: none;
+}
+.c_txt.undo{
+	background: #fafafa;
+}
+.c_btn{
+    border:1px solid #aaa;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    border-radius: 3px;
+    background: #fff;
+    padding: 0 20px;
+    cursor: pointer;
+}
+.c_btn:hover{
+    background: #bbb;
+}
+.c_btn_imp{
+    background: #fb6b25;
+    color: #fff;
+    border: 1px solid #ec5f1b;
+}
+.c_btn_imp:hover{
+    background: #ec5f1b;
+}
+a.c_btn:visited{
+    color: #666;
+}
+a.c_btn_imp:visited{
+    color: #fff;
+}
+.add_btn{
+	border:1px solid #eee;
+	display: inline-block;
+	width: 38px;
+	height: 35px;
+	line-height: 35px;
+	padding-left: 10px;
+	border-radius: 3px;
+	color: #666;
+	outline: none;
+	cursor: pointer;
+	margin-left: 10px;
+}
+.add_btn:hover{
+	background: #f5f5f5;
+}
+
+/*nav*/
+.nav{
+	width: 100%;
+	height: 50px;
+	background: #333333;
+}
+.container{
+	width:1002px;
+	margin:0 auto;
+	overflow: hidden;
+}
+.nav h1{
+	color: #FFFFFF;
+	line-height: 54px;
+	font-size: 16px;
+	float: left;
+	font-weight: 300;
+}
+.nav h1 a{
+	color: #FFFFFF;
+	line-height: 54px;
+	font-size: 16px;
+	float: left;
+	font-weight: 300;
+}
+.nav_menu{
+	float: left;
+	margin-left: 100px;
+}
+.nav_menu li{
+	float: left;
+}
+.nav_menu li a{
+	color: #fff;
+	display: block;
+	line-height: 50px;
+	padding: 0 20px;
+}
+.nav_menu li a:hover{
+	color: #3568e9;
+}
+.nav_menu li a.on{
+	background: #3568e9;
+	color: #fff;
+}
+.nav .login{
+	float: right;
+}
+.nav .login a,#user_login{
+	color: #fff;
+	line-height: 50px;
+}
+.nav .login a:hover{
+	color: #3568e9;
+}
+.login_frame{
+	width: 362px;
+	margin: 80px auto;
+}
+.login_frame h1{
+	text-align: center;
+}
+.login_frame li{
+	margin-bottom: 30px;
+}
+.login_frame button.btn_important{
+	width: 360px;
+}
+/*main*/
+.main{
+	background: #fff;
+	border:1px solid #e1e1e1;
+	margin-top: 50px;
+}
+.main.uniform{
+	padding: 50px;
+}
+#node_list{
+	margin: 50px auto;
+}
+#node_list h2{
+	padding-left: 20px;
+}
+#node_list h2,#fork_list h2{
+	font-size: 20px;
+	margin: 0 0 20px 0;
+}
+.node_list{
+	width: 960px;
+	margin: 0 auto;
+}
+.node_list li{
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	background: #f5f5f5;
+	margin: 10px 0;
+	border-radius: 5px;
+	overflow: hidden;
+}
+.node_list span{
+	display: inline-block;
+	width: 20%;
+	padding: 0 20px ;
+	float: left;
+	box-sizing: border-box;
+}
+.panel-bm .panel-heading {
+    background-color: #f3f4f7;
+    border-color: #ddd;
+    border-bottom: 0;
+    line-height: 21px;
+    padding: 10px 20px;
+}
+.content{
+    margin-top: 40px;
+    width: 1180px;
+}
+.panel-heading {
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+}
+
+.indexBlockList .panel-body {
+    height: 481px;
+    overflow: hidden;
+}
+
+.panel-bm .panel-heading {
+    background-color: #f3f4f7;
+    border-color: #ddd;
+    border-bottom: 0;
+    line-height: 21px;
+    padding: 10px 20px;
+}
+.panel-bm .panel-heading-title {
+    color: #000;
+    font-size: 16px;
+}
+.indexBlockList .panel-body {
+    height: 600px;
+    overflow: hidden;
+}
+.panel-bm .panel-body {
+    padding: 20px;
+}
+.indexBlockList .table {
+    margin-bottom: 0;
+}
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+table {
+    background-color: transparent;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+.indexBlockList .table>thead>tr>th, .indexBlockList .table>tbody>tr>th, .indexBlockList .table>tfoot>tr>th {
+    border-top: 0;
+    padding: 0 4px;
+    font-size: 14px;
+    line-height: 12px;
+    color: #aaa;
+    font-weight: 300;
+}
+.indexBlockList .table>thead>tr>th, .indexBlockList .table>tbody>tr>th, .indexBlockList .table>tfoot>tr>th, .indexBlockList .table>thead>tr>td, .indexBlockList .table>tbody>tr>td, .indexBlockList .table>tfoot>tr>td {
+    border-top: 0;
+    border-bottom: 1px solid #e6e9ee;
+    height: 36px;
+    vertical-align: middle;
+}
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+    padding: 8px;
+    line-height: 1.42857143;
+    vertical-align: top;
+    border-top: 1px solid #ddd;
+}
+.text-right {
+    text-align: right;
+}
+.panel-bm.panel {
+    border: 0;
+}
+.panel {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <div class="container">
+            <h1><a href="/">HelloworldBlockchain</a></h1>
+            <ul class="nav_menu">
+                <li><a href="/document/index.html" target="_blank">文档</a></li>
+                <li><a href="node.html">节点</a></li>
+                <li><a href="transaction.html">交易</a></li>
+                <li><a href="account.html">账户</a></li>
+                <li><a href="my.html">管理</a></li>
+            </ul>
+            <div class="login" id="user_login"></div>
+        </div>
+    </div>
+    <div class="container content">
+        <div class="row">
+            <div class="panel panel-bm indexBlockList">
+                <div class="panel-heading">
+                    <div class="panel-heading-title">最近出块</div>
+                </div>
+                <div class="panel-body">
+                    <table class="table">
+                        <tbody><tr id="append">
+                            <th class="text-right">高度</th>
+                            <th class="text-center">块大小</th>
+                            <th class="text-right">交易数量</th>
+                            <th class="text-center">块收益</th>
+                            <th class="text-right">时间</th>
+                            <th class="text-center">块哈希</th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./js/jQuery.js"></script>
+    <script>
+    // var axios = require('axios');
+var data = JSON.stringify({});
+var txt = `<tr>
+<td class="text-right"><a href="#" ga-type="block" ga-target="from height">656,876</a></td>
+<td class="text-left">
+    <i class="icon-pool icon-pool-f2pool"></i><div class="cell-poolname">
+        <a href="/stats/pool/F2Pool">F2Pool</a>
+    </div>
+</td>
+<td class="text-right">
+    <span data-toggle="tooltip" title="stripped size: 900,599">1,296,877</span>
+</td>
+<td class="text-center indexBlockList-blockAward">6.6908<span class="text-muted">4217 BTC</span></td>
+<td class="text-right indexBlockList-blockTimestamp" data-timestamp="1605346737">13 分钟前</td>
+<td class="text-center indexBlockList-blockhash"><a href="#" ga-type="block" ga-target="from blockhash">0000000000000000000d849cc424d7ed6412e663f1b5bf032820d1246ad14ab9</a></td>
+</tr>`
+var tab = document.querySelector('body > div.container.content > div > div > div.panel-body > table > tbody')
+// var config = {
+//   method: 'get',
+//   url: 'http://139.9.125.122/Api/Blockchain/QueryLast10BlockDto',
+//   headers: { 
+//     'Content-Type': 'application/json'
+//   },
+//   data : data
+// };
+
+// axios(config)
+// .then(function (response) {
+
+// })
+// .catch(function (error) {
+//   console.log(error);
+// });
+
+
+$.ajax({
+        type: "post",
+        url: "/Api/Blockchain/QueryLast10BlockDto",
+        contentType: "application/json",
+        dataType: "json",
+        data: `{}`,
+        async: false,
+        success: function (data) {
+            let list  = data.result.blockDtoList;
+            let txts = ''
+            for (let i = 0; i < list.length; i++) {
+                list[i]
+                txts+=`<tr>
+                <td class="text-right"><a href="#" ga-type="block" ga-target="from height">${list[i].height}</a></td>
+                <td class="text-left">
+                    <i class="icon-pool icon-pool-f2pool"></i><div class="cell-poolname">
+                        <a href="/stats/pool/F2Pool">${list[i].blockSize}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <span data-toggle="tooltip" title="stripped size: 900,599">${list[i].transactionCount}</span>
+                </td>
+                <td class="text-center indexBlockList-blockAward">6.6908<span class="text-muted">${list[i].minerIncentiveValue}</span></td>
+                <td class="text-right indexBlockList-blockTimestamp" data-timestamp="1605346737">${list[i].time}</td>
+                <td class="text-center indexBlockList-blockhash"><a target="_blank" href="./index2.html?hash=${list[i].hash}" ga-type="block" ga-target="from blockhash">${list[i].hash}</a></td>
+                </tr>`
+            }
+            tab.innerHTML+=txts	
+        },
+        error: function (e) {
+        }
+    });
+    </script>
+</body>
+</html>
