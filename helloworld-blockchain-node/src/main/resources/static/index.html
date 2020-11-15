@@ -447,10 +447,10 @@ $.ajax({
             for (let i = 0; i < list.length; i++) {
                 list[i]
                 txts+=`<tr>
-                <td class="text-right"><a href="#" ga-type="block" ga-target="from height">${list[i].height}</a></td>
+                <td class="text-right"><a target="_blank" href="./index2.html?hash=${list[i].hash}" ga-type="block" ga-target="from height">${list[i].height}</a></td>
                 <td class="text-left">
                     <i class="icon-pool icon-pool-f2pool"></i><div class="cell-poolname">
-                        <a href="/stats/pool/F2Pool">${list[i].blockSize}</a>
+                        <a>${list[i].blockSize}</a>
                     </div>
                 </td>
                 <td class="text-right">
