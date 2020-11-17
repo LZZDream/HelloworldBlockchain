@@ -85,6 +85,6 @@ public class LevelDBUtil {
     }
 
     public static long bytesToLong(byte[] bytesValue) {
-        return Long.valueOf(bytesToString(bytesValue));
+        return Long.parseLong(bytesToString(bytesValue));
     }
 }

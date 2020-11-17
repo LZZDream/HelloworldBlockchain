@@ -45,12 +45,10 @@ public enum OperationCodeEnum {
 
     OperationCodeEnum(byte[] code, String name) {
         this.code = code;
-        this.hexStringName = hexStringName;
         this.name = name;
     }
 
     private byte[] code;
-    private String hexStringName;
     private String name;
 
 
@@ -58,15 +56,7 @@ public enum OperationCodeEnum {
         return code;
     }
 
-    public void setCode(byte[] code) {
-        this.code = code;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }

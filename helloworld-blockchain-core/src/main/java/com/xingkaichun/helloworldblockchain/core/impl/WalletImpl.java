@@ -67,7 +67,6 @@ public class WalletImpl extends Wallet {
 
     public Account queryAccountByAddress(String address) {
         String sql = "SELECT * FROM wallet where address = ?" ;
-        List<Account> accountList = new ArrayList<>();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
