@@ -15,7 +15,7 @@ public class ThreadUtil {
         try {
             Thread.sleep(millis);
         } catch (InterruptedException e) {
-            logger.error("线程休眠异常",e);//不可能发生
+            logger.error("线程休眠异常",e);
         }
     }
 }
