@@ -32,6 +32,7 @@ import java.util.List;
 
 /**
  * 管理员控制台的控制器：用于控制本地区块链节点，如激活矿工、停用矿工、同步其它节点数据等。
+ * 这里的操作都需要一定得权限才可以操作，不适合对所有人开放。
  *
  * @author 邢开春 微信HelloworldBlockchain 邮箱xingkaichun@qq.com
  */
@@ -151,6 +152,7 @@ public class AdminConsoleController {
     }
 
 
+
     /**
      * 新增节点
      */
@@ -175,7 +177,6 @@ public class AdminConsoleController {
             return ServiceResult.createFailServiceResult(message);
         }
     }
-
     /**
      * 更新节点信息
      */
@@ -198,7 +199,6 @@ public class AdminConsoleController {
             return ServiceResult.createFailServiceResult(message);
         }
     }
-
     /**
      * 删除节点
      */
@@ -215,9 +215,8 @@ public class AdminConsoleController {
             return ServiceResult.createFailServiceResult(message);
         }
     }
-
     /**
-     * 查询节点
+     * 查询所有节点
      */
     @ResponseBody
     @RequestMapping(value = AdminConsoleApiRoute.QUERY_ALL_NODE_LIST,method={RequestMethod.GET,RequestMethod.POST})
@@ -234,8 +233,10 @@ public class AdminConsoleController {
         }
     }
 
+
+
     /**
-     * 查询是否允许自动搜索区块链节点
+     * 查询开启自动寻找区块链节点的功能
      */
     @ResponseBody
     @RequestMapping(value = AdminConsoleApiRoute.IS_AUTO_SEARCH_NODE,method={RequestMethod.GET,RequestMethod.POST})
@@ -251,9 +252,8 @@ public class AdminConsoleController {
             return ServiceResult.createFailServiceResult(message);
         }
     }
-
     /**
-     * 设置是否允许自动搜索区块链节点
+     * 设置是否允许自动寻找区块链节点
      */
     @ResponseBody
     @RequestMapping(value = AdminConsoleApiRoute.SET_AUTO_SEARCH_NODE,method={RequestMethod.GET,RequestMethod.POST})
@@ -269,26 +269,11 @@ public class AdminConsoleController {
         }
     }
 
-    /**
-     * 删除区块
-     */
-    @ResponseBody
-    @RequestMapping(value = AdminConsoleApiRoute.DELETE_BLOCK,method={RequestMethod.GET,RequestMethod.POST})
-    public ServiceResult<DeleteBlockResponse> deleteBlock(@RequestBody DeleteBlockRequest request){
-        try {
-            if(request.getBlockHeight() == null){
-                return ServiceResult.createFailServiceResult("删除区块失败，区块高度不能空。");
-            }
-            getBlockchainCore().deleteBlocksUtilBlockHeightLessThan(request.getBlockHeight());
-            DeleteBlockResponse response = new DeleteBlockResponse();
-            return ServiceResult.createSuccessServiceResult("删除区块成功",response);
-        } catch (Exception e){
-            String message = "删除区块失败";
-            logger.error(message,e);
-            return ServiceResult.createFailServiceResult(message);
-        }
-    }
 
+
+    /**
+     * 新增账户
+     */
     @ResponseBody
     @RequestMapping(value = AdminConsoleApiRoute.ADD_ACCOUNT,method={RequestMethod.GET,RequestMethod.POST})
     public ServiceResult<AddAccountResponse> addAccount(@RequestBody AddAccountRequest request){
@@ -308,7 +293,9 @@ public class AdminConsoleController {
             return ServiceResult.createFailServiceResult(message);
         }
     }
-
+    /**
+     * 删除账户
+     */
     @ResponseBody
     @RequestMapping(value = AdminConsoleApiRoute.DELETE_ACCOUNT,method={RequestMethod.GET,RequestMethod.POST})
     public ServiceResult<DeleteAccountResponse> deleteAccount(@RequestBody DeleteAccountRequest request){
@@ -327,7 +314,9 @@ public class AdminConsoleController {
             return ServiceResult.createFailServiceResult(message);
         }
     }
-
+    /**
+     * 查询所有的账户
+     */
     @ResponseBody
     @RequestMapping(value = AdminConsoleApiRoute.QUERY_ALL_ACCOUNT_LIST,method={RequestMethod.GET,RequestMethod.POST})
     public ServiceResult<QueryAllAccountListResponse> queryAllAccountList(@RequestBody QueryAllAccountListRequest request){
@@ -358,6 +347,30 @@ public class AdminConsoleController {
             return ServiceResult.createFailServiceResult(message);
         }
     }
+
+
+
+    /**
+     * 删除区块
+     */
+    @ResponseBody
+    @RequestMapping(value = AdminConsoleApiRoute.DELETE_BLOCK,method={RequestMethod.GET,RequestMethod.POST})
+    public ServiceResult<DeleteBlockResponse> deleteBlock(@RequestBody DeleteBlockRequest request){
+        try {
+            if(request.getBlockHeight() == null){
+                return ServiceResult.createFailServiceResult("删除区块失败，区块高度不能空。");
+            }
+            getBlockchainCore().deleteBlocksUtilBlockHeightLessThan(request.getBlockHeight());
+            DeleteBlockResponse response = new DeleteBlockResponse();
+            return ServiceResult.createSuccessServiceResult("删除区块成功",response);
+        } catch (Exception e){
+            String message = "删除区块失败";
+            logger.error(message,e);
+            return ServiceResult.createFailServiceResult(message);
+        }
+    }
+
+
 
     /**
      * 构建交易

@@ -156,6 +156,9 @@ public class BlockchainBrowserController {
         }
     }
 
+    /**
+     * 根据地址查询交易列表
+     */
     @ResponseBody
     @RequestMapping(value = BlockchainApiRoute.QUERY_TRANSACTION_LIST_BY_ADDRESS,method={RequestMethod.GET,RequestMethod.POST})
     public ServiceResult<QueryTransactionListByAddressResponse> queryTransactionListByAddress(@RequestBody QueryTransactionListByAddressRequest request){
@@ -216,6 +219,7 @@ public class BlockchainBrowserController {
             return ServiceResult.createFailServiceResult(message);
         }
     }
+
     /**
      * 根据地址获取未花费交易输出
      */
@@ -236,6 +240,7 @@ public class BlockchainBrowserController {
             return ServiceResult.createFailServiceResult(message);
         }
     }
+
     /**
      * 根据地址获取交易输出
      */
@@ -256,6 +261,7 @@ public class BlockchainBrowserController {
             return ServiceResult.createFailServiceResult(message);
         }
     }
+
     /**
      * 根据交易输出ID获取交易输出
      */
@@ -274,6 +280,7 @@ public class BlockchainBrowserController {
             return ServiceResult.createFailServiceResult(message);
         }
     }
+
     /**
      * Ping节点
      */
@@ -294,6 +301,7 @@ public class BlockchainBrowserController {
             return ServiceResult.createSuccessServiceResult(message,null);
         }
     }
+
     /**
      * 查询区块链高度
      */
@@ -311,6 +319,7 @@ public class BlockchainBrowserController {
             return ServiceResult.createSuccessServiceResult(message,null);
         }
     }
+
     /**
      * 查询挖矿中的交易
      */

@@ -7,7 +7,7 @@ import com.xingkaichun.helloworldblockchain.node.dto.transaction.TransactionView
 import java.util.List;
 
 /**
- * 用户service
+ * 区块链浏览器service
  *
  * @author 邢开春 微信HelloworldBlockchain 邮箱xingkaichun@qq.com
  */
