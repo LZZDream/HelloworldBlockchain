@@ -16,15 +16,18 @@ import java.util.List;
 @Component
 public class SecurityInterceptor implements HandlerInterceptor {
 
-	//允许的ip列表，多个ip之间以逗号(,)分隔。0.0.0.0代表允许所有ip访问。
+	//*代表允许所有ip访问。
+	private static final String ALL_IP = "*";
+
+	//允许的ip列表，多个ip之间以逗号(,)分隔。
 	@Value("#{'${permit.ip}'.split(',')}")
 	private List<String> permitIpList;
 
 	@Override
 	public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object object){
 		if(permitIpList != null){
-			//0.0.0.0代表允许所有ip访问
-			if(permitIpList.contains("0.0.0.0")){
+			//*代表允许所有ip访问
+			if(permitIpList.contains(ALL_IP)){
 				return true;
 			}
 			String remoteHost = httpServletRequest.getRemoteHost();
