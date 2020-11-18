@@ -29,7 +29,7 @@ public class Account implements Serializable {
 
 
     //region get set
-    //不需要set方法
+    //不需要暴露set方法
 
     public String getPrivateKey() {
         return privateKey;
