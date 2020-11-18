@@ -69,7 +69,7 @@ public abstract class SynchronizerDatabase {
      */
     public abstract long getMaxBlockHeight(String nodeId) ;
     /**
-     * 根据节点与区块高度获取区块
+     * 根据节点(nodeId)与区块高度获取区块
      */
     public abstract BlockDTO getBlockDto(String nodeId, long blockHeight) ;
     /**
