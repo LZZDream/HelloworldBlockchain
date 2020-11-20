@@ -5,7 +5,7 @@ import com.xingkaichun.helloworldblockchain.crypto.model.Account;
 import java.util.List;
 
 /**
- * @author xingkaichun@ceair.com
+ * @author 邢开春 微信HelloworldBlockchain 邮箱xingkaichun@qq.com
  */
 public abstract class Wallet {
 

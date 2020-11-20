@@ -3,7 +3,7 @@ package com.xingkaichun.helloworldblockchain.node.dto.transaction;
 import com.xingkaichun.helloworldblockchain.netcore.dto.common.PageCondition;
 
 /**
- * @author xingkaichun@ceair.com
+ * @author 邢开春 微信HelloworldBlockchain 邮箱xingkaichun@qq.com
  */
 public class QueryTransactionListByAddressRequest {
 
