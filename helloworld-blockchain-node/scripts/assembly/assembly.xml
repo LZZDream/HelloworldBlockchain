@@ -2,7 +2,7 @@
     <id>assembly</id>
     <!-- 设置打包好的文件格式 -->
     <formats>
-        <format>tar.gz</format>
+        <format>zip</format>
     </formats>
     <includeBaseDirectory>false</includeBaseDirectory>
     <fileSets>
