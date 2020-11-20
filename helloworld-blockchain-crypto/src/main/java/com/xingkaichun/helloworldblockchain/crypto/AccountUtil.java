@@ -53,11 +53,11 @@ public class AccountUtil {
             ECKeyGenerationParameters keygenParams = new ECKeyGenerationParameters(ecParams, secureRandom);
             generator.init(keygenParams);
             AsymmetricCipherKeyPair keypair = generator.generateKeyPair();
-            ECPrivateKeyParameters privParams = (ECPrivateKeyParameters) keypair.getPrivate();
+            ECPrivateKeyParameters ecPrivateKeyParameters = (ECPrivateKeyParameters) keypair.getPrivate();
             ECPublicKeyParameters pubParams = (ECPublicKeyParameters) keypair.getPublic();
-            BigInteger priv = privParams.getD();
+            BigInteger bigIntegerPrivateKey = ecPrivateKeyParameters.getD();
             byte[] pub = pubParams.getQ().getEncoded(compressed);
-            String privateKey = encodePrivateKey(priv);
+            String privateKey = encodePrivateKey(bigIntegerPrivateKey);
             String publicKey = encodePublicKey(pub);
             String address = addressFromPublicKey(publicKey);
             Account account = new Account(privateKey,publicKey,address);
