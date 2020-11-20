@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * 启动入口
- *
+ * //TODO 区块链浏览器项目拆分到独立的项目？？？还是在代码里标清楚浏览器部分的代码？？？
  * @author 邢开春 微信HelloworldBlockchain 邮箱xingkaichun@qq.com
  */
 @Configuration
