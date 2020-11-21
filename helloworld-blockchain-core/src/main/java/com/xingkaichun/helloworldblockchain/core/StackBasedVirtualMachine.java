@@ -47,7 +47,7 @@ public class StackBasedVirtualMachine {
                     throw new RuntimeException("脚本执行失败");
                 }
                 stack.push(String.valueOf(Boolean.TRUE));
-            }else if(Arrays.equals(OperationCodeEnum.OP_PUSHDATA32.getCode(),byteCommand)){
+            }else if(Arrays.equals(OperationCodeEnum.OP_PUSHDATA128.getCode(),byteCommand)){
                 stack.push(script.get(++i));
             }else {
                 throw new RuntimeException("不能识别的指令");
@@ -65,9 +65,9 @@ public class StackBasedVirtualMachine {
 
     public static InputScript createPayToPublicKeyHashInputScript(String sign, String publicKey) {
         InputScript script = new InputScript();
-        script.add(HexUtil.bytesToHexString(OperationCodeEnum.OP_PUSHDATA32.getCode()));
+        script.add(HexUtil.bytesToHexString(OperationCodeEnum.OP_PUSHDATA128.getCode()));
         script.add(sign);
-        script.add(HexUtil.bytesToHexString(OperationCodeEnum.OP_PUSHDATA32.getCode()));
+        script.add(HexUtil.bytesToHexString(OperationCodeEnum.OP_PUSHDATA128.getCode()));
         script.add(publicKey);
         return script;
     }
@@ -76,7 +76,7 @@ public class StackBasedVirtualMachine {
         OutputScript script = new OutputScript();
         script.add(HexUtil.bytesToHexString(OperationCodeEnum.OP_DUP.getCode()));
         script.add(HexUtil.bytesToHexString(OperationCodeEnum.OP_HASH160.getCode()));
-        script.add(HexUtil.bytesToHexString(OperationCodeEnum.OP_PUSHDATA32.getCode()));
+        script.add(HexUtil.bytesToHexString(OperationCodeEnum.OP_PUSHDATA128.getCode()));
         String publicKeyHash = AccountUtil.publicKeyHashFromAddress(address);
         script.add(publicKeyHash);
         script.add(HexUtil.bytesToHexString(OperationCodeEnum.OP_EQUALVERIFY.getCode()));

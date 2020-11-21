@@ -289,10 +289,10 @@ public class StructureSizeTool {
                     Arrays.equals(OperationCodeEnum.OP_EQUALVERIFY.getCode(),bytesOperationCode) ||
                     Arrays.equals(OperationCodeEnum.OP_CHECKSIG.getCode(),bytesOperationCode)){
 
-            }else if(Arrays.equals(OperationCodeEnum.OP_PUSHDATA32.getCode(),bytesOperationCode)){
+            }else if(Arrays.equals(OperationCodeEnum.OP_PUSHDATA128.getCode(),bytesOperationCode)){
                 String operationData = scriptDTO.get(++i);
                 byte[] bytesOperationData = HexUtil.hexStringToBytes(operationData);
-                if(bytesOperationData.length > 32){
+                if(bytesOperationData.length > 128){
                     return false;
                 }
             }else {

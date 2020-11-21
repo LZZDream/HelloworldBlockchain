@@ -35,10 +35,10 @@ public enum OperationCodeEnum {
      */
     OP_CHECKSIG(new byte[]{(byte)0x03},"OP_CHECKSIG"),
     /**
-     * 将下一个数据[最大256位/32字节]放入栈
+     * 将下一个数据[最大1024位/128字节]放入栈
      * OPERATION_CODE_PUSH_DATA
      */
-    OP_PUSHDATA32(new byte[]{(byte)0x04}, "OP_PUSHDATA32");
+    OP_PUSHDATA128(new byte[]{(byte)0x04}, "OP_PUSHDATA128");
 
 
 

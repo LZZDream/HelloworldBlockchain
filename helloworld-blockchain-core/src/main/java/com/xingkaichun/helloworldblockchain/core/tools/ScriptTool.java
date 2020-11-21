@@ -28,7 +28,7 @@ public class ScriptTool {
                     Arrays.equals(OperationCodeEnum.OP_EQUALVERIFY.getCode(),bytesOperationCode) ||
                     Arrays.equals(OperationCodeEnum.OP_CHECKSIG.getCode(),bytesOperationCode)){
                 bytesScript = Bytes.concat(bytesScript, ByteUtil.concatLengthBytes(bytesOperationCode));
-            }else if(Arrays.equals(OperationCodeEnum.OP_PUSHDATA32.getCode(),bytesOperationCode)){
+            }else if(Arrays.equals(OperationCodeEnum.OP_PUSHDATA128.getCode(),bytesOperationCode)){
                 String operationData = script.get(++i);
                 byte[] bytesOperationData = HexUtil.hexStringToBytes(operationData);
                 bytesScript = Bytes.concat(bytesScript, ByteUtil.concatLengthBytes(bytesOperationCode), ByteUtil.concatLengthBytes(bytesOperationData));
@@ -58,9 +58,9 @@ public class ScriptTool {
                 stringScript = stringScript + OperationCodeEnum.OP_EQUALVERIFY.getName() + " ";
             }else if(Arrays.equals(OperationCodeEnum.OP_CHECKSIG.getCode(),bytesOperationCode)){
                 stringScript = stringScript + OperationCodeEnum.OP_CHECKSIG.getName() + " ";
-            }else if(Arrays.equals(OperationCodeEnum.OP_PUSHDATA32.getCode(),bytesOperationCode)){
+            }else if(Arrays.equals(OperationCodeEnum.OP_PUSHDATA128.getCode(),bytesOperationCode)){
                 String operationData = script.get(++i);
-                stringScript = stringScript + OperationCodeEnum.OP_PUSHDATA32.getName() + " ";
+                stringScript = stringScript + OperationCodeEnum.OP_PUSHDATA128.getName() + " ";
                 stringScript = stringScript + operationData + " ";
             }else {
                 throw new RuntimeException("不能识别的指令");
