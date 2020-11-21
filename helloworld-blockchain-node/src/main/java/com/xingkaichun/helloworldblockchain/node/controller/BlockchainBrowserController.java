@@ -6,6 +6,7 @@ import com.xingkaichun.helloworldblockchain.core.model.transaction.Transaction;
 import com.xingkaichun.helloworldblockchain.core.model.transaction.TransactionOutputId;
 import com.xingkaichun.helloworldblockchain.core.tools.BlockTool;
 import com.xingkaichun.helloworldblockchain.core.tools.StructureSizeTool;
+import com.xingkaichun.helloworldblockchain.core.tools.WalletTool;
 import com.xingkaichun.helloworldblockchain.crypto.AccountUtil;
 import com.xingkaichun.helloworldblockchain.crypto.model.Account;
 import com.xingkaichun.helloworldblockchain.netcore.NetBlockchainCore;
@@ -18,6 +19,8 @@ import com.xingkaichun.helloworldblockchain.netcore.transport.dto.TransactionDTO
 import com.xingkaichun.helloworldblockchain.node.dto.BlockchainApiRoute;
 import com.xingkaichun.helloworldblockchain.node.dto.account.GenerateAccountRequest;
 import com.xingkaichun.helloworldblockchain.node.dto.account.GenerateAccountResponse;
+import com.xingkaichun.helloworldblockchain.node.dto.account.QueryAccountDetailByAddressRequest;
+import com.xingkaichun.helloworldblockchain.node.dto.account.QueryAccountDetailByAddressResponse;
 import com.xingkaichun.helloworldblockchain.node.dto.block.*;
 import com.xingkaichun.helloworldblockchain.node.dto.node.PingRequest;
 import com.xingkaichun.helloworldblockchain.node.dto.node.PingResponse;
@@ -155,6 +158,29 @@ public class BlockchainBrowserController {
             return ServiceResult.createFailServiceResult(message);
         }
     }
+
+    /**
+     * 根据地址查询账户详情
+     */
+    @ResponseBody
+    @RequestMapping(value = BlockchainApiRoute.QUERY_ACCOUNT_DETAIL_BY_ADDRESS,method={RequestMethod.GET,RequestMethod.POST})
+    public ServiceResult<QueryAccountDetailByAddressResponse> queryAccountDetailByAddress(@RequestBody QueryAccountDetailByAddressRequest request){
+        try {
+            String address = request.getAddress();
+
+            QueryAccountDetailByAddressResponse response = new QueryAccountDetailByAddressResponse();
+            response.setAddress(address);
+            response.setBalance(String.valueOf(WalletTool.obtainBalance(getBlockchainCore(),address)));
+            response.setReceipt(String.valueOf(WalletTool.obtainReceipt(getBlockchainCore(),address)));
+            response.setSpend(String.valueOf(WalletTool.obtainSpend(getBlockchainCore(),address)));
+            return ServiceResult.createSuccessServiceResult("[查询交易输出]成功",response);
+        } catch (Exception e){
+            String message = "[根据地址查询账户详情]失败";
+            logger.error(message,e);
+            return ServiceResult.createFailServiceResult(message);
+        }
+    }
+
 
     /**
      * 根据地址查询交易列表

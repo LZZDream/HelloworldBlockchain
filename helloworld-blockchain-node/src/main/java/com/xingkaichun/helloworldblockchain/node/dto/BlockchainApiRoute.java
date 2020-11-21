@@ -16,6 +16,7 @@ public class BlockchainApiRoute {
     public static final String QUERY_TRANSACTION_LIST_BY_TRANSACTION_HEIGHT = "/Api/Blockchain/QueryTransactionListByTransactionHeight";
     public static final String QUERY_TRANSACTION_LIST_BY_BLOCK_HASH_TRANSACTION_HEIGHT = "/Api/Blockchain/QueryTransactionListByBlockHashTransactionHeight";
     public static final String QUERY_TRANSACTION_LIST_BY_ADDRESS = "/Api/Blockchain/QueryTransactionListByAddress";
+    public static final String QUERY_ACCOUNT_DETAIL_BY_ADDRESS = "/Api/Blockchain/QueryAccountDetailByAddress";
 
     public static final String QUERY_TRANSACTION_OUTPUT_LIST_BY_ADDRESS = "/Api/Blockchain/QueryTransactionOutputListByAddress";
     public static final String QUERY_UNSPEND_TRANSACTION_OUTPUT_LIST_BY_ADDRESS = "/Api/Blockchain/QueryUnspendTransactionOutputListByAddress";
